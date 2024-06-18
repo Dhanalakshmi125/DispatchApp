@@ -1,0 +1,24 @@
+<!-- <p>parcel-in works!</p> -->
+<div class="form-container">
+    <h2>Parcel In Form</h2>
+    <form [formGroup]="parcelInForm" (ngSubmit)="onSubmit()">
+      <mat-form-field appearance="fill">
+        <mat-label>Sender Name</mat-label>
+        <input matInput formControlName="senderName" required>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Sender Address</mat-label>
+        <textarea matInput formControlName="senderAddress" required></textarea>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Recipient Name</mat-label>
+        <input matInput formControlName="recipientName" required>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Recipient Address</mat-label>
+        <textarea matInput formControlName="recipientAddress" required></textarea>
+      </mat-form-field>
+      <button mat-raised-button color="primary" type="submit">Submit</button>
+    </form>
+  </div>
+  
