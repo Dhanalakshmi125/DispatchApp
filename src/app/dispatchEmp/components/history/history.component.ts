@@ -7,8 +7,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { NgFor, NgIf } from '@angular/common';
-
+import { CommonModule, NgFor, NgIf } from '@angular/common';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatTableModule } from '@angular/material/table';
 @Component({
   selector: 'app-history',
   standalone: true,
@@ -19,25 +20,23 @@ import { NgFor, NgIf } from '@angular/common';
     MatDialogModule,
     MatIconModule,
     FormsModule,
-    NgFor
+    NgFor,
+    MatToolbarModule,
+   CommonModule,
+   MatTableModule,
+   MatToolbarModule
+
     
   ],
   templateUrl: './history.component.html',
   styleUrl: './history.component.css'
 })
 export class HistoryComponent {
-  parcelInHistory: string[] = [
-    'Parcel In 1 - Date/Time',
-    'Parcel In 2 - Date/Time',
-    'Parcel In 3 - Date/Time',
-    // Add more ParcelIn history items as needed
-  ];
-
-  parcelOutHistory: string[] = [
-    'Parcel Out 1 - Date/Time',
-    'Parcel Out 2 - Date/Time',
-    'Parcel Out 3 - Date/Time',
-    // Add more ParcelOut history items as needed
+  displayedColumns: string[] = ['id', 'senderName', 'recipientName', 'date'];
+  historyData = [
+    {id: 1, senderName: 'John Doe', recipientName: 'Jane Smith', date: new Date()},
+    {id: 2, senderName: 'Alice Brown', recipientName: 'Bob White', date: new Date()},
+    // Add more data here
   ];
 
   constructor() { }

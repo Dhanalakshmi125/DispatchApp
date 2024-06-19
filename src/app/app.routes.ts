@@ -18,7 +18,7 @@ export const routes: Routes = [
         path: 'dispatchEmployee',
         component: DispatchEmployeeComponent,
         children: [
-        //   { path: '', redirectTo: 'home', pathMatch: 'full' },
+          { path: '', redirectTo: 'home', pathMatch: 'full' },
           { path: 'home', component: HomeComponent },
           { path: 'parcelIn', component: ParcelInComponent },
           { path: 'parcelOut', component: ParcelOutComponent },

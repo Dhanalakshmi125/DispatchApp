@@ -1,24 +1,70 @@
-<!-- <p>parcel-out works!</p> -->
-<div class="form-container">
-    <h2>Parcel Out Form</h2>
+<mat-card class="form-card">
+  <mat-card-header>
+    <mat-card-title>Parcel Out Form</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
     <form [formGroup]="parcelOutForm" (ngSubmit)="onSubmit()">
-      <mat-form-field appearance="fill">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Consignment Number</mat-label>
+        <input matInput formControlName="consignmentNumber" required>
+      </mat-form-field>
+      
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Consignment Date</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="consignmentDate" required>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+      
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Sender Department</mat-label>
+        <mat-select formControlName="senderDepartment" required>
+          <mat-option *ngFor="let department of senderDepartments" [value]="department">
+            {{ department }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      
+      <mat-form-field appearance="outline" class="full-width">
         <mat-label>Sender Name</mat-label>
-        <input matInput formControlName="senderName" required>
+        <mat-select formControlName="senderName" required>
+          <mat-option *ngFor="let sender of senders" [value]="sender">
+            {{ sender }}
+          </mat-option>
+        </mat-select>
       </mat-form-field>
-      <mat-form-field appearance="fill">
-        <mat-label>Sender Address</mat-label>
-        <textarea matInput formControlName="senderAddress" required></textarea>
+      
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Recipient Location Code</mat-label>
+        <mat-select formControlName="recipientLocCode" required>
+          <mat-option *ngFor="let locCode of recipientLocCodes" [value]="locCode">
+            {{ locCode }}
+          </mat-option>
+        </mat-select>
       </mat-form-field>
-      <mat-form-field appearance="fill">
+      
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Recipient Department</mat-label>
+        <mat-select formControlName="recipientDepartment" required>
+          <mat-option *ngFor="let department of recipientDepartments" [value]="department">
+            {{ department }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      
+      <mat-form-field appearance="outline" class="full-width">
         <mat-label>Recipient Name</mat-label>
-        <input matInput formControlName="recipientName" required>
+        <mat-select formControlName="recipientName" required>
+          <mat-option *ngFor="let recipient of recipients" [value]="recipient">
+            {{ recipient }}
+          </mat-option>
+        </mat-select>
       </mat-form-field>
-      <mat-form-field appearance="fill">
-        <mat-label>Recipient Address</mat-label>
-        <textarea matInput formControlName="recipientAddress" required></textarea>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Weight</mat-label>
+        <input matInput formControlName="weight" required>
       </mat-form-field>
       <button mat-raised-button color="primary" type="submit">Submit</button>
     </form>
-  </div>
-  
+  </mat-card-content>
+</mat-card>

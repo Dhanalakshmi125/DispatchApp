@@ -1,17 +1,11 @@
-.form-container {
-    max-width: 400px;
-    margin: auto;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  
-  .mat-form-field {
-    width: 100%;
-    margin-bottom: 20px;
-  }
-  
-  button[type="submit"] {
-    width: 100%;
-  }
-  
+.form-card {
+  /* max-width: 600px; */
+  margin: 20px auto;
+  padding: 20px;
+  height: 500px;
+  overflow: auto;
+}
+
+.full-width {
+  width: 100%;
+}

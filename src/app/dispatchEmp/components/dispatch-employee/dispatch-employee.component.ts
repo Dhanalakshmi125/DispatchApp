@@ -9,6 +9,9 @@ import { RouterModule,Router} from '@angular/router';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { HomeComponent } from '../home/home.component';
 import { NgIf } from '@angular/common';
+import { MatFormField, MatFormFieldModule, MatLabel } from '@angular/material/form-field';
+import { FormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
 @Component({
   selector: 'app-dispatch-employee',
   standalone: true,
@@ -20,12 +23,18 @@ import { NgIf } from '@angular/common';
     RouterOutlet,
     MatSidenavModule,
     HomeComponent,
-    NgIf
+    NgIf,
+    MatLabel,
+    MatFormField,
+    FormsModule,
+    MatInputModule,
+    MatFormFieldModule
   ],
   templateUrl: './dispatch-employee.component.html',
   styleUrl: './dispatch-employee.component.css'
 })
 export class DispatchEmployeeComponent {
+  searchQuery: string = '';
   constructor(private router: Router) {}
 
   navigate(path: string) {
@@ -36,6 +45,12 @@ export class DispatchEmployeeComponent {
   toggleSidenav(sidenav: any) {
     this.isMenuOpened = !this.isMenuOpened;
     sidenav.toggle();
+  }
+  
+
+  onSearch() {
+    // Handle the search functionality here
+    console.log('Searching for:', this.searchQuery);
   }
 
 }
