@@ -1,23 +1,20 @@
-<!-- <p>parcel-in works!</p> -->
-<!-- <p>parcel-in works!</p> -->
-<mat-card class="form-card" style="width: 100%; overflow: auto;">
+<mat-card class="form-card" style="width: 80%;">
   <mat-card-header>
     <mat-card-title>Parcel In Form</mat-card-title>
   </mat-card-header>
   <mat-card-content>
     <form [formGroup]="parcelInForm" (ngSubmit)="onSubmit()">
       <mat-form-field appearance="outline" class="full-width">
-        <mat-label>consignmentNo</mat-label>
+        <mat-label>Consignment No</mat-label>
         <input matInput formControlName="consignmentNo" required>
       </mat-form-field>
-
       <mat-form-field appearance="outline" class="full-width">
-        <mat-label>consignmentDate</mat-label>
+        <mat-label>Consignment Date</mat-label>
         <input matInput formControlName="consignmentDate" required>
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="full-width">
-        <mat-label>ReceivedDate</mat-label>
+        <mat-label>Received Date</mat-label>
         <input matInput [matDatepicker]="picker" formControlName="receivedDate" required>
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
@@ -25,61 +22,84 @@
 
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Sender Location Code</mat-label>
-        <mat-select formControlName="senderLocCode" required>
-          <mat-option *ngFor="let code of locationCodes" [value]="code">
-            {{ code }}
+        <mat-select formControlName="senderLocCode" required (selectionChange)="loadDepartments($event.value)">
+          <mat-option *ngFor="let code of locationCodes" [value]="code.locCode">
+            {{ code.locCode }}
           </mat-option>
         </mat-select>
       </mat-form-field>
 
+      <!-- <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Sender Department</mat-label>
+        <mat-select formControlName="senderDepartment" required (selectionChange)="loadSenders(parcelInForm.value.senderLocCode, $event.value)">
+          <mat-option *ngFor="let dept of departments" [value]="dept.deptCode">
+            {{ dept.deptCode }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field> -->
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Sender Department</mat-label>
         <mat-select formControlName="senderDepartment" required>
-          <mat-option *ngFor="let department of departments" [value]="department">
-            {{ department }}
+          <mat-option *ngFor="let dept of departments" [value]="dept.deptCode">
+            {{ dept.deptCode }}
           </mat-option>
         </mat-select>
       </mat-form-field>
 
-      <mat-form-field appearance="outline" class="full-width">
+      <!-- <mat-form-field appearance="outline" class="full-width">
         <mat-label>Sender Name</mat-label>
         <mat-select formControlName="senderName" required>
-          <mat-option *ngFor="let sender of senders" [value]="sender">
-            {{ sender }}
+          <mat-option *ngFor="let sender of senders" [value]="sender.userId">
+            {{ sender.userName }}
           </mat-option>
         </mat-select>
+      </mat-form-field> -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Sender Name</mat-label>
+        <input matInput formControlName="senderName" required>
       </mat-form-field>
-    
+
+      <!-- <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Recipient Department</mat-label>
+        <mat-select formControlName="recipientDepartment" required (selectionChange)="loadRecipients(parcelInForm.value.senderLocCode, $event.value)">
+          <mat-option *ngFor="let dept of departments" [value]="dept.deptCode">
+            {{ dept.deptName }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field> -->
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Recipient Department</mat-label>
-        <mat-select formControlName="recipientDepartment" required>
-          <mat-option *ngFor="let department of departments" [value]="department">
-            {{ department }}
+        <mat-select formControlName="recipientDepartment" required >
+          <mat-option *ngFor="let dept of departments" [value]="dept.deptCode">
+            {{ dept.deptName }}
           </mat-option>
         </mat-select>
       </mat-form-field>
 
-      <mat-form-field appearance="outline" class="full-width">
+
+      <!-- <mat-form-field appearance="outline" class="full-width">
         <mat-label>Recipient Name</mat-label>
         <mat-select formControlName="recipientName" required>
-          <mat-option *ngFor="let recipient of recipients" [value]="recipient">
-            {{ recipient }}
+          <mat-option *ngFor="let recipient of recipients" [value]="recipient.userId">
+            {{ recipient.userName }}
           </mat-option>
         </mat-select>
+      </mat-form-field> -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Recipient Name</mat-label>
+        <input matInput formControlName="recipientName" required>
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Courier Name</mat-label>
         <mat-select formControlName="courierName" required>
-          <mat-option *ngFor="let courier of couriers" [value]="courier">
-            {{ courier }}
+          <mat-option *ngFor="let courier of couriers" [value]="courier.courierCode">
+            {{ courier.courierName }}
           </mat-option>
         </mat-select>
       </mat-form-field>
 
-      <button mat-raised-button color="primary" type="submit">Submit</button>
+      <button mat-raised-button color="primary" type="submit" [disabled]="!parcelInForm.valid">Submit</button>
     </form>
   </mat-card-content>
 </mat-card>
-
-  

@@ -8,6 +8,7 @@ import { ParcelInComponent } from './dispatchEmp/components/parcel-in/parcel-in.
 import { ParcelOutComponent } from './dispatchEmp/components/parcel-out/parcel-out.component';
 import { HistoryComponent } from './dispatchEmp/components/history/history.component';
 import { DispatchEmployeeComponent } from './dispatchEmp/components/dispatch-employee/dispatch-employee.component';
+import { HttpClientModule } from '@angular/common/http';
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -19,7 +20,8 @@ import { DispatchEmployeeComponent } from './dispatchEmp/components/dispatch-emp
     ParcelInComponent,
     ParcelOutComponent,
     HistoryComponent,
-    DispatchEmployeeComponent
+    DispatchEmployeeComponent,
+    HttpClientModule
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'

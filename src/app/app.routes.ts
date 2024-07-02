@@ -9,6 +9,8 @@ import { ParcelOutComponent } from './dispatchEmp/components/parcel-out/parcel-o
 import { HistoryComponent } from './dispatchEmp/components/history/history.component';
 import { DispatchEmployeeComponent } from './dispatchEmp/components/dispatch-employee/dispatch-employee.component';
 import { ProfileComponent } from './dispatchEmp/components/profile/profile.component';
+import { IoclEmployeeComponent } from './ioclEmp/components/iocl-employee/iocl-employee.component';
+import { DashboardComponent } from './ioclEmp/components/dashboard/dashboard.component';
 export const routes: Routes = [
     {path:"login",component:LoginComponent},
     {path:"disEmp",component:DisEmpComponent},
@@ -26,4 +28,13 @@ export const routes: Routes = [
           {path:'profile',component:ProfileComponent}
         ]
       },
+      {
+        path:'ioclEmployee',
+        component:IoclEmployeeComponent,
+        children:[
+          { path:'dashboard',component:DashboardComponent },
+          { path:'profile', component:ProfileComponent}
+        ]
+      }
+
 ];

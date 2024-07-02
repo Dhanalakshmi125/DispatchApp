@@ -27,41 +27,45 @@ import { routes } from '../../../app.routes';
   styleUrl: './dis-emp.component.css'
 })
 export class DisEmpComponent {
-  loginForm: FormGroup;
-  hide = true;
-  captchaText: string='';
-  userId:string='';
-  constructor(private fb: FormBuilder,private router: Router) {
-    this.loginForm = this.fb.group({
-      ioclId: ['', Validators.required],
-      password: ['', Validators.required],
-      captchaInput: ['', Validators.required]
-    });
+  loginForm: FormGroup=new FormGroup({});;
+  hide = false;
+  captchaText: string = '';
+
+  constructor(private fb: FormBuilder, private router: Router) {
+    
+  }
+
+  ngOnInit(): void {
+    this.initForm();
     this.generateCaptcha();
   }
 
-  onSubmit() {
-    if (this.loginForm.valid) {
-      const { ioclId, password, captchaInput } = this.loginForm.value;
-      if (captchaInput === this.captchaText) {
-        // Handle successful login
-        console.log(`Logging in with IOCL ID: ${ioclId}, Password: ${password}`);
-        
-        this.router.navigate(['/dispatchEmployee']);
+  initForm(): void {
+    this.loginForm = this.fb.group({
+      userId: ['', Validators.required],
+      password: ['', Validators.required],
+      captchaInput: ['', Validators.required]
+    });
+  }
 
+  onSubmit(): void {
+    if (this.loginForm.valid) {
+      const { userId, password, captchaInput } = this.loginForm.value;
+      if (captchaInput === this.captchaText) {
+        console.log(`Logging in with IOCL ID: ${userId}, Password: ${password}`);
+        this.router.navigate(['/dispatchEmployee']);
       } else {
-        // Handle captcha validation failure
         alert('Invalid captcha. Please try again.');
         this.reloadCaptcha();
       }
     }
   }
 
-  togglePasswordVisibility() {
+  togglePasswordVisibility(): void {
     this.hide = !this.hide;
   }
 
-  generateCaptcha() {
+  generateCaptcha(): void {
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     let result = '';
     for (let i = 0; i < 6; i++) {
@@ -70,8 +74,7 @@ export class DisEmpComponent {
     this.captchaText = result;
   }
 
-  reloadCaptcha() {
+  reloadCaptcha(): void {
     this.generateCaptcha();
   }
-
 }

@@ -1,0 +1,50 @@
+  
+  .logo {
+    height: 40px;
+    margin-right: 10px;
+  }
+  
+  .title {
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .spacer {
+    flex: 1 1 auto;
+  } 
+  
+  .search-bar {
+    width: 200px;
+    margin-right: 16px;
+    /* border: 2px solid darkblue; */
+    margin-top: 20px;
+  }
+
+  .main-content {
+    padding: 16px;
+  }
+  mat-sidenav {
+    width: 250px;
+    
+  }
+  
+  .example-container {
+    height: 85vh;
+  }
+  
+  .mat-sidenav {
+    width: 250px;
+    
+  }
+  
+  .mat-toolbar.mat-primary {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
+  
+  .custom-menu-icon {
+    height: 24px;
+    width: 24px;
+  }
+  

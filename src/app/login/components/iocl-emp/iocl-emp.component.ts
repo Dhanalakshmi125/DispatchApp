@@ -8,10 +8,12 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { NgIf } from '@angular/common';
 import { RouterModule ,Router} from '@angular/router';
+import { IoclEmployeeComponent } from '../../../ioclEmp/components/iocl-employee/iocl-employee.component';
 @Component({
   selector: 'app-iocl-emp',
   standalone: true,
   imports: [
+    IoclEmployeeComponent,
     MatButtonModule,
     MatCardModule,
     FormsModule,
@@ -30,9 +32,9 @@ export class IoclEmpComponent {
   hide = true;
   captchaText: string='';
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder,private router: Router) {
     this.loginForm = this.fb.group({
-      ioclId: ['', Validators.required],
+      userId: ['', Validators.required],
       password: ['', Validators.required],
       captchaInput: ['', Validators.required]
     });
@@ -41,10 +43,12 @@ export class IoclEmpComponent {
 
   onSubmit() {
     if (this.loginForm.valid) {
-      const { ioclId, password, captchaInput } = this.loginForm.value;
+      const { userId, password, captchaInput } = this.loginForm.value;
       if (captchaInput === this.captchaText) {
         // Handle successful login
-        console.log(`Logging in with IOCL ID: ${ioclId}, Password: ${password}`);
+        console.log(`Logging in with IOCL ID: ${userId}, Password: ${password}`);
+        this.router.navigate(['/ioclEmployee']);
+
       } else {
         // Handle captcha validation failure
         alert('Invalid captcha. Please try again.');
