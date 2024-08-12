@@ -2,18 +2,29 @@
   <img src="assets/indianOilLogo.png" alt="IndianOil Logo" class="logo">
   <span class="title">INDIAN OIL</span>
   <span class="spacer"></span>
-  <mat-form-field class="search-bar" appearance="fill" style="height: 70px; width: 300px; ">
+  <!-- <mat-form-field class="search-bar" appearance="fill" style="height: 70px; width: 300px; ">
     <mat-label>Search</mat-label>
     <input matInput placeholder="Search..." [(ngModel)]="searchQuery">
     <button mat-icon-button matSuffix (click)="onSearch()">
       <mat-icon>search</mat-icon>
     </button>
-  </mat-form-field>
+  </mat-form-field> -->
   <button mat-icon-button color="primary" (click)="navigate('/dispatchEmployee/profile')">
     <mat-icon>account_circle</mat-icon>
   </button>
-</mat-toolbar>
+  <mat-card-header>
+    <mat-card-title>{{ profile.EmpName}}</mat-card-title>
+    <mat-card-subtitle>{{ profile.role }}</mat-card-subtitle>
+    <mat-card-subtitle>{{ profile.Designation}}</mat-card-subtitle>
+    
+  </mat-card-header>
+  <!-- <mat-card-header>
+    <mat-card-title>EmpName</mat-card-title>
+    <mat-card-subtitle> profile.role</mat-card-subtitle>
+    <mat-card-subtitle>profile.Designation</mat-card-subtitle> 
+  </mat-card-header> -->
 
+</mat-toolbar> 
 <mat-sidenav-container class="example-container">
   <mat-sidenav #sidenav mode="side" [(opened)]="isMenuOpened">
     <mat-toolbar>

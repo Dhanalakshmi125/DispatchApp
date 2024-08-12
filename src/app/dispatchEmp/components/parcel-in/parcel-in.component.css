@@ -1,13 +1,16 @@
 .form-card {
-  /* max-width: 600px; */
   margin: 20px auto;
   padding: 20px;
-  width:80%;
-  height: 500px;
+  width: 100%;
+  height: auto;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 20px;
 }
 
 .full-width {
-  width: 40%;
-  margin-left: 20px;
-  margin-right: 40px;
+  width: 100%;
 }

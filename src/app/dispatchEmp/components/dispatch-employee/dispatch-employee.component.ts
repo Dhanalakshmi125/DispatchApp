@@ -12,6 +12,8 @@ import { NgIf } from '@angular/common';
 import { MatFormField, MatFormFieldModule, MatLabel } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
+import { MatCardHeader, MatCardSubtitle, MatCardTitle, MatCardTitleGroup } from '@angular/material/card';
+import { DisEmpVerOtpService } from '../../../login/services/dis-emp-ver-otp.service';
 @Component({
   selector: 'app-dispatch-employee',
   standalone: true,
@@ -28,14 +30,28 @@ import { MatInputModule } from '@angular/material/input';
     MatFormField,
     FormsModule,
     MatInputModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    MatCardSubtitle,
+    MatCardTitle,
+    MatCardHeader
   ],
   templateUrl: './dispatch-employee.component.html',
   styleUrl: './dispatch-employee.component.css'
 })
 export class DispatchEmployeeComponent {
   searchQuery: string = '';
-  constructor(private router: Router) {}
+  profile:any;
+  constructor(private router: Router,private verOtp:DisEmpVerOtpService) {
+     // Access profile data from router state
+    //  const navigation = this.router.getCurrentNavigation();
+    //  if (navigation?.extras.state) {
+    //    this.profile = navigation.extras.state['profile'];
+    //  }
+  }
+  ngOnInit(): void {
+    // Retrieve the profile data from the service
+    this.profile = this.verOtp.getProfileData();
+  }
 
   navigate(path: string) {
     this.router.navigate([path]);

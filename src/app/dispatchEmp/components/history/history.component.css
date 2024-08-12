@@ -1,15 +1,30 @@
-.history-card {
-  /* max-width: 800px; */
-  margin: 20px auto;
+/* history.component.css */
+.history-container {
   padding: 20px;
-  width: 100%;
+ 
+}
+
+.filter-container {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  border: 1px solid lightgray;
+  padding: 20px;
+}
+
+.parcel-lists {
+  display: flex;
+  gap: 20px;
+}
+
+.parcel-in, .parcel-out {
+  width: 50%;
+  border: 1px solid lightgray;
 
 }
 
-table {
-  width: 100%;
-}
-
-th.mat-header-cell, td.mat-cell {
-  text-align: left;
+.filter-buttons {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
 }

@@ -1,39 +1,70 @@
-<!-- <p>history works!</p> -->
-<mat-card class="history-card">
-  <mat-card-header>
-    <mat-card-title>Parcel History</mat-card-title>
-  </mat-card-header>
-  <mat-card-content>
-    <table mat-table [dataSource]="historyData" class="mat-elevation-z8">
-      <!-- ID Column -->
-      <ng-container matColumnDef="id">
-        <th mat-header-cell *matHeaderCellDef> ID </th>
-        <td mat-cell *matCellDef="let element"> {{element.id}} </td>
-      </ng-container>
+<!-- history.component.html -->
+<div class="history-container">
+  <div class="filter-container">
+    from date<input type="date" placeholder="From Date">
+    to date<input type="date" placeholder="To Date">
+    select type<select>
+      <option value="in">IN</option>
+      <option value="out">OUT</option>
+    </select>
+  </div>
 
-      <!-- Sender Name Column -->
-      <ng-container matColumnDef="senderName">
-        <th mat-header-cell *matHeaderCellDef> Sender Name </th>
-        <td mat-cell *matCellDef="let element"> {{element.senderName}} </td>
-      </ng-container>
+  <div class="parcel-lists">
+    <div class="parcel-in">
+      <h2>Parcel In</h2>
+      <div class="filter-buttons" style="margin-left: 400px;">
+        <button>Filter By Name</button>
+        <button>Clear</button>
+      </div>
+      <table mat-table [dataSource]="parcelsIn" class="mat-elevation-z8">
+        <ng-container matColumnDef="senderName">
+          <th mat-header-cell *matHeaderCellDef>Sender Name</th>
+          <td mat-cell *matCellDef="let parcel">{{parcel.senderName}}</td>
+        </ng-container>
+        <ng-container matColumnDef="recipientName">
+          <th mat-header-cell *matHeaderCellDef>Recipient Name</th>
+          <td mat-cell *matCellDef="let parcel">{{parcel.recipientName}}</td>
+        </ng-container>
+        <ng-container matColumnDef="dateTime">
+          <th mat-header-cell *matHeaderCellDef>Date & Time</th>
+          <td mat-cell *matCellDef="let parcel">{{parcel.dateTime | date:'yyyy-MM-dd HH:mm'}}</td>
+        </ng-container>
+        <ng-container matColumnDef="view">
+          <th mat-header-cell *matHeaderCellDef>View</th>
+          <td mat-cell *matCellDef="let parcel"><button mat-icon-button><mat-icon>visibility</mat-icon></button></td>
+        </ng-container>
 
-      <!-- Recipient Name Column -->
-      <ng-container matColumnDef="recipientName">
-        <th mat-header-cell *matHeaderCellDef> Recipient Name </th>
-        <td mat-cell *matCellDef="let element"> {{element.recipientName}} </td>
-      </ng-container>
+        <tr mat-header-row *matHeaderRowDef="['senderName', 'recipientName', 'dateTime', 'view']"></tr>
+        <tr mat-row *matRowDef="let row; columns: ['senderName', 'recipientName', 'dateTime', 'view'];"></tr>
+      </table>
+    </div>
+    <div class="parcel-out">
+      <h2>Parcel Out</h2>
+      <div class="filter-buttons" style="margin-left: 400px;">
+        <button>Filter By Name</button>
+        <button>Clear</button>
+      </div>
+      <table mat-table [dataSource]="parcelsOut" class="mat-elevation-z8">
+        <ng-container matColumnDef="senderName">
+          <th mat-header-cell *matHeaderCellDef>Sender Name</th>
+          <td mat-cell *matCellDef="let parcel">{{parcel.senderName}}</td>
+        </ng-container>
+        <ng-container matColumnDef="recipientName">
+          <th mat-header-cell *matHeaderCellDef>Recipient Name</th>
+          <td mat-cell *matCellDef="let parcel">{{parcel.recipientName}}</td>
+        </ng-container>
+        <ng-container matColumnDef="dateTime">
+          <th mat-header-cell *matHeaderCellDef>Date & Time</th>
+          <td mat-cell *matCellDef="let parcel">{{parcel.dateTime | date:'yyyy-MM-dd HH:mm'}}</td>
+        </ng-container>
+        <ng-container matColumnDef="view">
+          <th mat-header-cell *matHeaderCellDef>View</th>
+          <td mat-cell *matCellDef="let parcel"><button mat-icon-button><mat-icon>visibility</mat-icon></button></td>
+        </ng-container>
 
-      <!-- Date Column -->
-      <ng-container matColumnDef="date">
-        <th mat-header-cell *matHeaderCellDef> Date </th>
-        <td mat-cell *matCellDef="let element"> {{element.date | date}} </td>
-      </ng-container>
-
-      <!-- Define columns in the table -->
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
-  </mat-card-content>
-</mat-card>
-
-  
+        <tr mat-header-row *matHeaderRowDef="['senderName', 'recipientName', 'dateTime', 'view']"></tr>
+        <tr mat-row *matRowDef="let row; columns: ['senderName', 'recipientName', 'dateTime', 'view'];"></tr>
+      </table>
+    </div>
+  </div>
+</div>

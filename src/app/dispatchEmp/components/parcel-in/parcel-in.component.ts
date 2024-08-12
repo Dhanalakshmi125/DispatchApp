@@ -23,7 +23,9 @@ import { MstLocationService } from '../../services/mst-location.service';
 import { MstDepartmentService } from '../../services/mst-department.service';
 import { MstCourierService } from '../../services/mst-courier.service';
 import { MstUserService } from '../../services/mst-user.service';
-
+import { DatePipe } from '@angular/common';
+import { MstEmployee } from '../../model/mstEmployee';
+import { HttpErrorResponse } from '@angular/common/http';
 @Component({
   selector: 'app-parcel-in',
   standalone: true,
@@ -31,32 +33,30 @@ import { MstUserService } from '../../services/mst-user.service';
     MatButtonModule, MatCardModule, FormsModule, ReactiveFormsModule, NgIf,
     MatFormFieldModule, MatInputModule, MatDialogModule, MatIconModule,
     MatSelectModule, MatDatepickerModule, MatNativeDateModule, NgFor, JsonPipe,
+    
   ],
   templateUrl: './parcel-in.component.html',
   styleUrl: './parcel-in.component.css'
 })
 export class ParcelInComponent implements OnInit {
-
   parcelInForm: FormGroup;
-  locationCodes: MstLocation[] = [];
-  departments: MstDepartment[] = [];
-  senders: MstUser[] = [];
-  recipients: MstUser[] = [];
+  locationCodes: string[] = [];
+  senderDepartments: string[] = [];
+  recipientDepartments: string[] = [];
+  senders: string[] = [];
+  recipients: string[] = [];
   couriers: MstCourier[] = [];
 
   constructor(
     private fb: FormBuilder,
     private parcelInService: TrnParcelInService,
-    private locationService: MstLocationService,
-    private departmentService: MstDepartmentService,
-    private courierService: MstCourierService,
-    private userService: MstUserService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private datePipe: DatePipe
   ) {
     this.parcelInForm = this.fb.group({
-      consignmentNo: ['', Validators.required],
-      consignmentDate: ['', Validators.required],
-      receivedDate: ['', Validators.required],
+      consignmentNumber: ['', Validators.required],
+      consignmentDate: [this.datePipe.transform(new Date(), 'yyyy-MM-dd'), Validators.required],
+      receivedDate: [this.datePipe.transform(new Date(), 'yyyy-MM-dd'), Validators.required],
       senderLocCode: ['', Validators.required],
       senderDepartment: ['', Validators.required],
       senderName: ['', Validators.required],
@@ -69,68 +69,123 @@ export class ParcelInComponent implements OnInit {
   ngOnInit(): void {
     this.loadLocations();
     this.loadCouriers();
+    this.loadRecipientDept();
+    this.loadRecipientNames();
+    
 
-    // Adding value changes subscription to load dependent data
     this.parcelInForm.get('senderLocCode')?.valueChanges.subscribe(senderLocCode => {
-      this.loadDepartments(senderLocCode);
+      this.loadDepartmentsByLocationName(senderLocCode);
     });
 
     this.parcelInForm.get('senderDepartment')?.valueChanges.subscribe(senderDepartment => {
-      const senderLocCode = this.parcelInForm.get('senderLocCode')?.value;
-      if (senderLocCode) {
-        this.loadSenders(senderLocCode, senderDepartment);
-      }
+      this.loadSenderNames(senderDepartment);
     });
 
-    this.parcelInForm.get('recipientDepartment')?.valueChanges.subscribe(recipientDepartment => {
-      const recipientLocCode = this.parcelInForm.get('recipientLocCode')?.value;
-      if (recipientLocCode) {
-        this.loadRecipients(recipientLocCode, recipientDepartment);
-      }
-    });
+    // Uncomment if you need to fetch recipient names based on recipientDepartment changes
+    // this.parcelInForm.get('recipientDepartment')?.valueChanges.subscribe(() => {
+    //   this.loadRecipientNames();
+    // });
   }
 
   loadLocations(): void {
-    this.locationService.getAllLocations().subscribe(locations => {
+    this.parcelInService.getLocations().subscribe(locations => {
       this.locationCodes = locations;
     });
   }
 
-  loadDepartments(senderLocCode: string): void {
-    this.parcelInService.getSenderDepartments(senderLocCode).subscribe(departments => {
-      this.departments = departments;
+  loadDepartmentsByLocationName(senderLocCode: string): void {
+    this.parcelInService.getDepartmentsByLocationName(senderLocCode).subscribe(departments => {
+      this.senderDepartments = departments; // Store in senderDepartments array
     });
   }
 
-  loadSenders(senderLocCode: string, deptCode: string): void {
-    this.parcelInService.getSenderUsers(senderLocCode, deptCode).subscribe(senders => {
+  loadSenderNames(senderDepartment: string): void {
+    this.parcelInService.getAllEmployees().subscribe(senders => {
       this.senders = senders;
     });
   }
 
-  loadRecipients(recipientLocCode: string, deptCode: string): void {
-    this.parcelInService.getRecipientUsers(recipientLocCode, deptCode).subscribe(recipients => {
+  loadRecipientDept(): void {
+    this.parcelInService.getRecipientDepartments().subscribe(departments => {
+      this.recipientDepartments = departments; // Store in recipientDepartments array
+    });
+  }
+
+  loadRecipientNames(): void {
+    this.parcelInService.getAllEmployees().subscribe(recipients => {
       this.recipients = recipients;
     });
   }
 
   loadCouriers(): void {
-    this.courierService.getAllCouriers().subscribe(couriers => {
+    this.parcelInService.getAllCouriers().subscribe(couriers => {
       this.couriers = couriers;
     });
   }
-
   onSubmit(): void {
-    if (this.parcelInForm.valid) {
-      const parcelIn: TrnParcelIn = this.parcelInForm.value;
-      this.parcelInService.createParcelIn(parcelIn).subscribe(response => {
-        this.snackBar.open('Parcel In created successfully', 'Close', { duration: 3000 });
-        this.parcelInForm.reset();
-      }, error => {
-        this.snackBar.open('Error creating Parcel In', 'Close', { duration: 3000 });
+    console.log('Payload:', this.parcelInForm.value);
+    if (this.parcelInForm.invalid) {
+      this.snackBar.open('Please fill all required fields.', 'Close', {
+        duration: 3000,
+        verticalPosition: 'top'
       });
-    } else {
-      this.snackBar.open('Please fill in all required fields', 'Close', { duration: 3000 });
+      return;
     }
-  }
-}
+
+    const parcelIn: TrnParcelIn = {
+      consignmentNumber: this.parcelInForm.value.consignmentNumber,
+      consignmentDate: this.parcelInForm.value.consignmentDate,
+      receivedDate: this.parcelInForm.value.receivedDate,
+      senderLocCode: this.parcelInForm.value.senderLocCode,
+      senderDepartment: this.parcelInForm.value.senderDepartment,
+      senderName: this.parcelInForm.value.senderName,
+      recipientDepartment: this.parcelInForm.value.recipientDepartment,
+      recipientName: this.parcelInForm.value.recipientName,
+      courierName: this.parcelInForm.value.courierName,
+      recipientLocCode: '', // Handled by backend
+      inTrackingId:0,  // Handled by backend
+      recordStatus: '',     // Handled by backend
+      createdBy: '',        // Handled by backend
+      createdDate: new Date()  // Handled by backend
+    };
+
+    this.parcelInService.createParcel(parcelIn).subscribe(
+    (response) => {
+        this.snackBar.open('Parcel created successfully!', 'Close', {
+          duration: 3000,
+          verticalPosition: 'top'
+        });
+        this.parcelInForm.reset();
+      },
+      (error: HttpErrorResponse) => {
+        // Enhanced error logging
+        console.error('Error Status:', error.status); // Logs HTTP status code
+        console.error('Status Text:', error.statusText); // Logs status text
+        console.error('Error URL:', error.url); // Logs the URL that caused the error
+  
+        if (error.error instanceof ErrorEvent) {
+          // Client-side error (network issue, etc.)
+          console.error('Client-side Error:', error.error.message);
+        } else {
+          // Server-side error
+          console.error('Server-side Error:', error.error);
+          
+          if (error.error.message) {
+            console.error('Error Message:', error.error.message);
+          }
+  
+          if (error.error.trace) {
+            console.error('Error Trace:', error.error.trace);
+          }
+  
+          if (error.error.errors && Array.isArray(error.error.errors)) {
+            console.error('Validation Errors:', error.error.errors);
+          }
+        }
+  
+        // Provide user-friendly feedback
+        alert('An error occurred while creating the parcel. Please try again later.');
+      }
+    );
+
+  }  }

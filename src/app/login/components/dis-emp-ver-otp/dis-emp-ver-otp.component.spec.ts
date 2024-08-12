@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DisEmpComponent } from './dis-emp.component';
+import { DisEmpVerOtpComponent } from './dis-emp-ver-otp.component';
 
-describe('DisEmpComponent', () => {
-  let component: DisEmpComponent;
-  let fixture: ComponentFixture<DisEmpComponent>;
+describe('DisEmpVerOtpComponent', () => {
+  let component: DisEmpVerOtpComponent;
+  let fixture: ComponentFixture<DisEmpVerOtpComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [DisEmpComponent]
+      imports: [DisEmpVerOtpComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(DisEmpComponent);
+    fixture = TestBed.createComponent(DisEmpVerOtpComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

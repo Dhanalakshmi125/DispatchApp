@@ -22,9 +22,9 @@ import { MatTableModule } from '@angular/material/table';
     FormsModule,
     NgFor,
     MatToolbarModule,
-   CommonModule,
-   MatTableModule,
-   MatToolbarModule
+    CommonModule,
+    MatTableModule,
+    MatToolbarModule
 
     
   ],
@@ -38,6 +38,8 @@ export class HistoryComponent {
     {id: 2, senderName: 'Alice Brown', recipientName: 'Bob White', date: new Date()},
     // Add more data here
   ];
+  parcelsIn: [] = [];
+  parcelsOut: [] = [];
 
   constructor() { }
 

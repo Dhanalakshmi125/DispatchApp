@@ -2,19 +2,13 @@
     <div class="profile-photo-container">
       <img class="profile-photo" src="../../../../assets/person.jpg" alt="Profile Photo">
     </div>
-    <mat-card-header>
-      <mat-card-title>{{ profile.name }}</mat-card-title>
-      <mat-card-subtitle>{{ profile.role }}</mat-card-subtitle>
-    </mat-card-header>
-    <mat-card-content>
-      <p>
-        Email: {{ profile.email }}<br>
-        Phone: {{ profile.phone }}<br>
-        Address: {{ profile.address }}
-      </p>
-    </mat-card-content>
-    <mat-card-actions>
-      <button mat-button (click)="editProfile()">EDIT</button>
-    </mat-card-actions>
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>{{ profile?.EmpName }}</mat-card-title>
+        <mat-card-subtitle>{{ profile?.Designation }}</mat-card-subtitle>
+        <mat-card-subtitle>{{ profile?.Role }}</mat-card-subtitle>
+        <mat-card-subtitle>{{ profile?. locationName }}</mat-card-subtitle>                                  
+      </mat-card-header>
+    </mat-card>
   </mat-card>
-  
+ 

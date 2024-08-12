@@ -10,7 +10,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { routes } from '../../../app.routes';
 import { NgIf } from '@angular/common';
 import { IoclEmpComponent } from '../iocl-emp/iocl-emp.component';
-import { DisEmpComponent } from '../dis-emp/dis-emp.component';
+import { DisEmpReqOtpComponent } from '../dis-emp-req-otp/dis-emp-req-otp.component';
 
 @Component({
   selector: 'app-login',
@@ -23,7 +23,7 @@ import { DisEmpComponent } from '../dis-emp/dis-emp.component';
     MatIconModule,
     RouterModule,
     IoclEmpComponent,
-    DisEmpComponent
+    DisEmpReqOtpComponent
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
