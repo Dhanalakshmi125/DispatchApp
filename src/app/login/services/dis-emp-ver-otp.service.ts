@@ -36,7 +36,6 @@ export class DisEmpVerOtpService {
       if (date) {
         params = params.set('date', date);
       }
-  
       return this.http.get(`${this.baseUrl}/totalsByDate`, { params, withCredentials: true })
         .pipe(
           catchError(this.handleError)
@@ -45,5 +44,8 @@ export class DisEmpVerOtpService {
     private handleError(error: any) {
       console.error('An error occurred:', error);
       return throwError(error);
+    }
+    logout(): Observable<any> {
+      return this.http.post(`${this.baseUrl}/logout`, {withCredentials: true } ,{ responseType: 'text' });
     }
 }

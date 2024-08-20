@@ -14,6 +14,7 @@ import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardHeader, MatCardSubtitle, MatCardTitle, MatCardTitleGroup } from '@angular/material/card';
 import { DisEmpVerOtpService } from '../../../login/services/dis-emp-ver-otp.service';
+import { MatMenuModule } from '@angular/material/menu'; 
 @Component({
   selector: 'app-dispatch-employee',
   standalone: true,
@@ -33,7 +34,8 @@ import { DisEmpVerOtpService } from '../../../login/services/dis-emp-ver-otp.ser
     MatFormFieldModule,
     MatCardSubtitle,
     MatCardTitle,
-    MatCardHeader
+    MatCardHeader,
+    MatMenuModule
   ],
   templateUrl: './dispatch-employee.component.html',
   styleUrl: './dispatch-employee.component.css'
@@ -67,6 +69,19 @@ export class DispatchEmployeeComponent {
   onSearch() {
     // Handle the search functionality here
     console.log('Searching for:', this.searchQuery);
+  }
+  logout(): void {
+    this.verOtp.logout().subscribe({
+      next: () => {
+        // Handle successful logout, e.g., navigate to the login page
+        console.log("user logout success ")
+        this.router.navigate(['/login']);
+      },
+      error: (err) => {
+        // Handle logout error if necessary
+        console.error('Logout failed', err);
+      }
+    });
   }
 
 }

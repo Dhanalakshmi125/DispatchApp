@@ -6,12 +6,15 @@ import { RouterModule } from '@angular/router';
 import { HomeComponent } from './dispatchEmp/components/home/home.component';
 import { ParcelInComponent } from './dispatchEmp/components/parcel-in/parcel-in.component';
 import { ParcelOutComponent } from './dispatchEmp/components/parcel-out/parcel-out.component';
-import { HistoryComponent } from './dispatchEmp/components/history/history.component';
 import { DispatchEmployeeComponent } from './dispatchEmp/components/dispatch-employee/dispatch-employee.component';
 import { ProfileComponent } from './dispatchEmp/components/profile/profile.component';
 import { IoclEmployeeComponent } from './ioclEmp/components/iocl-employee/iocl-employee.component';
 import { DashboardComponent } from './ioclEmp/components/dashboard/dashboard.component';
 import { DisEmpVerOtpComponent } from './login/components/dis-emp-ver-otp/dis-emp-ver-otp.component';
+import { HistoryComponent } from './dispatchEmp/components/history/history.component';
+import { ReportsComponent } from './dispatchEmp/components/reports/reports.component';
+import { ParcelEditComponent } from './dispatchEmp/components/parcel-edit/parcel-edit.component';
+import { ParcelOutEditComponent } from './dispatchEmp/components/parcel-out-edit/parcel-out-edit.component';
 export const routes: Routes = [
     {path:"login",component:LoginComponent},
     {path:"disEmpReqOtp",component:DisEmpReqOtpComponent},
@@ -27,9 +30,12 @@ export const routes: Routes = [
           { path: 'home', component: HomeComponent },
           { path: 'parcelIn', component: ParcelInComponent },
           { path: 'parcelOut', component: ParcelOutComponent },
-          { path: 'history', component: HistoryComponent },
           {path:'profile',component:ProfileComponent},
-          { path: '', redirectTo: 'profile', pathMatch: 'full' }
+          { path: '', redirectTo: 'home', pathMatch: 'full' },
+          { path: 'history', component: HistoryComponent }, 
+          { path: 'reports', component: ReportsComponent },
+          { path: 'parcelEdit', component: ParcelEditComponent},
+          { path:'parcelOutEdit', component:ParcelOutEditComponent}
         ]
       },
       {

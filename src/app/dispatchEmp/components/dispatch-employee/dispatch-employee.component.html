@@ -2,29 +2,25 @@
   <img src="assets/indianOilLogo.png" alt="IndianOil Logo" class="logo">
   <span class="title">INDIAN OIL</span>
   <span class="spacer"></span>
-  <!-- <mat-form-field class="search-bar" appearance="fill" style="height: 70px; width: 300px; ">
-    <mat-label>Search</mat-label>
-    <input matInput placeholder="Search..." [(ngModel)]="searchQuery">
-    <button mat-icon-button matSuffix (click)="onSearch()">
-      <mat-icon>search</mat-icon>
-    </button>
-  </mat-form-field> -->
-  <button mat-icon-button color="primary" (click)="navigate('/dispatchEmployee/profile')">
+  
+  <button mat-icon-button color="primary" [matMenuTriggerFor]="profileMenu" class="profile-button">
     <mat-icon>account_circle</mat-icon>
   </button>
-  <mat-card-header>
-    <mat-card-title>{{ profile.EmpName}}</mat-card-title>
-    <mat-card-subtitle>{{ profile.role }}</mat-card-subtitle>
-    <mat-card-subtitle>{{ profile.Designation}}</mat-card-subtitle>
-    
-  </mat-card-header>
-  <!-- <mat-card-header>
-    <mat-card-title>EmpName</mat-card-title>
-    <mat-card-subtitle> profile.role</mat-card-subtitle>
-    <mat-card-subtitle>profile.Designation</mat-card-subtitle> 
-  </mat-card-header> -->
+  
+  <mat-menu #profileMenu="matMenu">
+    <button mat-menu-item (click)="navigate('/dispatchEmployee/profile')">
+      Profile
+    </button>
+    <button mat-menu-item (click)="logout()">
+      Logout
+    </button>
+  </mat-menu>
+  <div class="profile-details">
+    <span class="profile-name">{{ profile.EmpName }}</span>
+    <span class="profile-info">{{ profile.Role }} | {{ profile.Designation }}</span>
+  </div>
+</mat-toolbar>
 
-</mat-toolbar> 
 <mat-sidenav-container class="example-container">
   <mat-sidenav #sidenav mode="side" [(opened)]="isMenuOpened">
     <mat-toolbar>
@@ -49,10 +45,14 @@
         <mat-icon class="list-icon">history</mat-icon>
         <span class="list-text">History</span>
       </a>
-      <a mat-list-item (click)="navigate('/dispatchEmployee/profile')">
+      <a mat-list-item (click)="navigate('/dispatchEmployee/reports')">
+        <mat-icon class="list-icon">assessment</mat-icon>
+        <span class="list-text">Reports</span>
+      </a>
+      <!-- <a mat-list-item (click)="navigate('/dispatchEmployee/profile')">
         <mat-icon class="list-icon">person</mat-icon>
         <span class="list-text">Profile</span>
-      </a>
+      </a> -->
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
@@ -60,7 +60,7 @@
       <button *ngIf="!isMenuOpened" mat-icon-button (click)="toggleSidenav(sidenav)">
         <mat-icon>menu</mat-icon>
       </button>
-      <span>DispatchApp</span>
+      <span class="disapp">DispatchApp</span>
     </mat-toolbar>
     <div class="main-content">
       <router-outlet></router-outlet>

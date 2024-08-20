@@ -1,5 +1,5 @@
 .form-card {
-  margin: 20px auto;
+  margin: 10px auto;
   padding: 20px;
   width: 100%;
   height: auto;
@@ -24,4 +24,18 @@
 {
   text-align: center;
   width: 30%;
+}
+mat-card-header {
+  position: relative;
+  padding: 10px; /* Adjust based on your design */
+}
+
+.close-button {
+  position: absolute;
+  top: 5px; /* Adjust based on your design */
+  right: 5px; /* Adjust based on your design */
+  z-index: 1; /* Ensure it is above other content */
+}
+mat-card-title{
+  padding: 5px;
 }

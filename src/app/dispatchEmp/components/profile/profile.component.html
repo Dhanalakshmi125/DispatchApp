@@ -1,14 +1,21 @@
-<mat-card class="profile-card">
+<div class="profile-container">
+  <mat-card class="profile-card">
     <div class="profile-photo-container">
-      <img class="profile-photo" src="../../../../assets/person.jpg" alt="Profile Photo">
+      <img src="../../../../assets/profile.webp" alt="Profile Photo" class="profile-image">
     </div>
-    <mat-card>
-      <mat-card-header>
-        <mat-card-title>{{ profile?.EmpName }}</mat-card-title>
-        <mat-card-subtitle>{{ profile?.Designation }}</mat-card-subtitle>
-        <mat-card-subtitle>{{ profile?.Role }}</mat-card-subtitle>
-        <mat-card-subtitle>{{ profile?. locationName }}</mat-card-subtitle>                                  
-      </mat-card-header>
-    </mat-card>
+    <mat-card-content>
+      <div class="profile-field">
+        <strong>Username:</strong> {{ profile?.EmpName }}
+      </div>
+      <div class="profile-field">
+        <strong>Designation:</strong> {{ profile?.Designation }}
+      </div>
+      <div class="profile-field">
+        <strong>Role:</strong> {{ profile?.Role }}
+      </div>
+      <div class="profile-field">
+        <strong>Location Name:</strong> {{ profile?.locationName }}
+      </div>
+    </mat-card-content>
   </mat-card>
- 
+</div>

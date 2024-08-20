@@ -14,6 +14,7 @@ export class TrnParcelIn {
     recordStatus: string;
     createdBy: string;
     createdDate: Date;
+    LastUpdatedDate!:Date;
     constructor(data:any){
       this.recipientLocCode=data.recipientLocCode;
       this.inTrackingId=data.inTrackingId;
@@ -28,7 +29,8 @@ export class TrnParcelIn {
       this.courierName=data.courierName;
       this.recordStatus=data.recordStatus;
       this.createdBy=data.createdBy;
-      this.createdDate=data.createdDate
+      this.createdDate=data.createdDate;
+      this.LastUpdatedDate=data.lastUpdatedDate;
     }
   }
   

@@ -5,11 +5,14 @@ import { LoginComponent } from './login/components/login/login.component';
 import { ProfileComponent } from './dispatchEmp/components/profile/profile.component';
 import { ParcelInComponent } from './dispatchEmp/components/parcel-in/parcel-in.component';
 import { ParcelOutComponent } from './dispatchEmp/components/parcel-out/parcel-out.component';
-import { HistoryComponent } from './dispatchEmp/components/history/history.component';
 import { DispatchEmployeeComponent } from './dispatchEmp/components/dispatch-employee/dispatch-employee.component';
 import { HttpClientModule } from '@angular/common/http';
 import { DisEmpReqOtpComponent } from './login/components/dis-emp-req-otp/dis-emp-req-otp.component';
 import { DisEmpVerOtpComponent } from './login/components/dis-emp-ver-otp/dis-emp-ver-otp.component';
+import { HistoryComponent } from './dispatchEmp/components/history/history.component';
+import { ReportsComponent } from './dispatchEmp/components/reports/reports.component';
+import { ParcelEditComponent } from './dispatchEmp/components/parcel-edit/parcel-edit.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -22,9 +25,12 @@ import { DisEmpVerOtpComponent } from './login/components/dis-emp-ver-otp/dis-em
     ParcelInComponent,
     ParcelOutComponent,
     HistoryComponent,
+    ReportsComponent,
     DispatchEmployeeComponent,
     HttpClientModule,
-    
+    ParcelEditComponent,
+    ParcelOutComponent,
+    MatPaginatorModule
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'

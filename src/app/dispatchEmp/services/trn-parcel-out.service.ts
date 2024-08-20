@@ -1,22 +1,18 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { MstLocation } from '../model/mstLocation';
-import { MstDepartment } from '../model/mstDepartment';
-import { MstUser } from '../model/mstUser';
 import { MstCourier } from '../model/mstCourier';
-import { MstEmployee} from '../model/mstEmployee';
-import { TrnParcelIn } from '../model/trnParcelIn';
+import { TrnParcelOut } from '../model/trnParcelOut';
 import { StatusCodeModal } from '../model/statusCodeModal';
 import { Page } from '../model/page';
 import { HttpParams } from '@angular/common/http';
 @Injectable({
   providedIn: 'root'
 })
-export class TrnParcelInService {
+export class TrnParcelOutService {
 
   private baseUrl = 'http://localhost:8182/api/v1/dispatch';
-  private parcelInUrl='http://localhost:8182/parcels-in';
+  private parcelOutUrl='http://localhost:8182/parcels-out';
 
   constructor(private http: HttpClient) {}
 
@@ -32,35 +28,34 @@ export class TrnParcelInService {
     return this.http.get<string[]>(`${this.baseUrl}/names/by/all-loc`);
   }
 
-  getRecipientDepartments(): Observable<string[]> {
+  getSenderDepartments(): Observable<string[]> {
     return this.http.get<string[]>(`${this.baseUrl}/departments-by-loccode`, {withCredentials: true });
   }
-
   getAllCouriers(): Observable<MstCourier[]> {
     return this.http.get<MstCourier[]>(`${this.baseUrl}/courier-names`);
   }
-  createParcel(parcelIn: TrnParcelIn): Observable<any> {
-    return this.http.post<any>(`${this.parcelInUrl}`, parcelIn, { withCredentials: true });
+  createParcel(parcelOut: TrnParcelOut): Observable<any> {
+    return this.http.post<any>(`${this.parcelOutUrl}`, parcelOut, { withCredentials: true });
   }
-  getParcelInData(page: number = 0, size: number = 8): Observable<Page<TrnParcelIn>> {
+  getParcelOutData(page: number = 0, size: number = 8): Observable<Page<TrnParcelOut>> {
     // Create query parameters
     let params = new HttpParams()
       .set('page', page.toString())
       .set('size', size.toString());
 
     // Make HTTP GET request with pagination parameters
-    return this.http.get<Page<TrnParcelIn>>(`${this.parcelInUrl}/get-in-parcelsbyloccode`, {
+    return this.http.get<Page<TrnParcelOut>>(`${this.parcelOutUrl}/get-out-parcelsbyloccode`, {
       params: params,
       withCredentials: true
     });
   }
-  updateParcelIn(recipientLocCode: string, inTrackingId: number, parcelIn: TrnParcelIn): Observable<any> {
-    const url = `${this.parcelInUrl}/${recipientLocCode}/${inTrackingId}`;
-   return this.http.put(url, parcelIn);
+  updateParcelOut(senderLocCode: string, outTrackingId: number, parcelOut: TrnParcelOut): Observable<any> {
+    const url = `${this.parcelOutUrl}/${senderLocCode}/${outTrackingId}`;
+   return this.http.put(url,parcelOut);
   }
-  // TrnParcelInService
-  deleteParcelIn(inTrackingId: number): Observable<any> {
-  return this.http.delete<any>(`${this.parcelInUrl}/${inTrackingId}`,{ withCredentials: true });
+  deleteParcelOut(outTrackingId: number): Observable<any> {
+    return this.http.delete<any>(`${this.parcelOutUrl}/${outTrackingId}`,{withCredentials: true});
+  }
 }
 
-}
+
