@@ -42,7 +42,7 @@ export class DisEmpVerOtpComponent implements OnInit {
   constructor(private fb: FormBuilder,private verOtp:DisEmpVerOtpService,private router: Router) {
     
       this.loginForm = this.fb.group({
-          phoneNumber: [{value: '9390617401', disabled: true}, Validators.required],
+          phoneNumber: [{value: '8465930450', disabled: true}, Validators.required],
           otp: this.fb.array([]),
           captcha: ['', Validators.required],
       });

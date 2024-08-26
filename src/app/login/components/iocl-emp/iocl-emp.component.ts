@@ -9,6 +9,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { NgIf } from '@angular/common';
 import { RouterModule ,Router} from '@angular/router';
 import { IoclEmployeeComponent } from '../../../ioclEmp/components/iocl-employee/iocl-employee.component';
+import { IoclEmpServiceService } from '../../services/iocl-emp-service.service';
+import { Console } from 'console';
 @Component({
   selector: 'app-iocl-emp',
   standalone: true,
@@ -32,43 +34,104 @@ export class IoclEmpComponent {
   hide = true;
   captchaText: string='';
 
-  constructor(private fb: FormBuilder,private router: Router) {
+  constructor(private fb: FormBuilder,
+    private router: Router,
+    private ioclEmpService:IoclEmpServiceService
+  ) 
+  {
     this.loginForm = this.fb.group({
       userId: ['', Validators.required],
       password: ['', Validators.required],
       captchaInput: ['', Validators.required]
     });
+    // this.generateCaptcha();
+  }
+
+  ngOnInit(): void {
     this.generateCaptcha();
   }
 
+  // onSubmit() {
+  //   if (this.loginForm.valid) {
+  //     const { userId, password, captchaInput } = this.loginForm.value;
+  //     if (captchaInput === this.captchaText) {
+  //       // Handle successful login
+  //       console.log(`Logging in with IOCL ID: ${userId}, Password: ${password}`);
+  //       this.router.navigate(['/ioclEmployee']);
+
+  //     } else {
+  //       // Handle captcha validation failure
+  //       alert('Invalid captcha. Please try again.');
+  //       this.reloadCaptcha();
+  //     }
+  //   }
+  // }
+  generateCaptcha() {
+    this.ioclEmpService.getCaptcha().subscribe({
+      next: (res: any) => {
+        console.log('Captcha response:', res);
+        this.captchaText = res.captchaValue;
+      },
+      error: (err) => {
+        console.error('Captcha generation error:', err);
+      }
+    });
+  }
+  
   onSubmit() {
     if (this.loginForm.valid) {
       const { userId, password, captchaInput } = this.loginForm.value;
-      if (captchaInput === this.captchaText) {
-        // Handle successful login
-        console.log(`Logging in with IOCL ID: ${userId}, Password: ${password}`);
-        this.router.navigate(['/ioclEmployee']);
-
-      } else {
-        // Handle captcha validation failure
-        alert('Invalid captcha. Please try again.');
-        this.reloadCaptcha();
-      }
+      console.log('Submitting captcha:', captchaInput);
+      this.ioclEmpService.checkCaptcha(captchaInput).subscribe({
+        next: (res: any) => {
+          console.log('Captcha check response:', res);
+      
+          if (res.status === 'valid') {
+            console.log("Captcha valid");
+            // Proceed with login 
+            this.ioclEmpService.authenticateUser(userId, password, captchaInput).subscribe({
+              next: (response: any) => {
+                const role = response.role;
+                console.log('Login successful:', response);
+                this.ioclEmpService.setEmpData(response);
+                this.router.navigate(['/ioclEmployee']);
+              },
+              error: (err) => {
+                console.error('Login failed:', err);
+                alert('Login failed. Please check your credentials.');
+              }
+            });
+          } else {
+            alert('Invalid captcha. Please try again.');
+            this.reloadCaptcha();
+          }
+        },
+        error: (err) => {
+          console.error('Captcha validation error:', err);
+          alert('Captcha validation failed. Please try again.');
+          this.reloadCaptcha();
+        }
+      });
+      
+      
     }
   }
+  
 
   togglePasswordVisibility() {
     this.hide = !this.hide;
   }
 
-  generateCaptcha() {
-    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    let result = '';
-    for (let i = 0; i < 6; i++) {
-      result += characters.charAt(Math.floor(Math.random() * characters.length));
-    }
-    this.captchaText = result;
-  }
+  // generateCaptcha() {
+  //   this.ioclEmpService.getCaptcha().subscribe({
+  //     next: (res: any) => {
+  //       this.captchaText =res.captchaValue
+  //     },
+  //     error: (err) => {
+  //       console.error('Captcha generation failed:', err);
+  //     }
+  //   });
+  // }
 
   reloadCaptcha() {
     this.generateCaptcha();

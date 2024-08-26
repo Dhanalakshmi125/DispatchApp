@@ -3,13 +3,13 @@
     <img src="assets/indianOilLogo.png" alt="IndianOil Logo" class="logo">
     <span class="title">INDIAN OIL</span>
     <span class="spacer"></span>
-    <mat-form-field class="search-bar" appearance="fill" style="height: 70px; width: 300px;">
+    <!-- <mat-form-field class="search-bar" appearance="fill" style="height: 70px; width: 300px;">
       <mat-label>Search</mat-label>
       <input matInput placeholder="Search..." [(ngModel)]="searchQuery">
       <button mat-icon-button matSuffix (click)="onSearch()">
         <mat-icon>search</mat-icon>
       </button>
-    </mat-form-field>
+    </mat-form-field> -->
     <button mat-icon-button color="primary" (click)="navigate('/dispatchEmployee/profile')">
       <mat-icon>account_circle</mat-icon>
     </button>
@@ -27,10 +27,22 @@
           <mat-icon class="list-icon">dashboard</mat-icon>
           <span class="list-text">Dashboard</span>
         </a>
-        <!-- <a mat-list-item (click)="navigate('/dispatchEmployee/history')">
+        <a mat-list-item (click)="navigate('/dispatchEmployee/locAdmin')">
+          <mat-icon class="list-icon">location</mat-icon>
+          <span class="list-text">Loc_Admin</span>
+        </a>
+        <a mat-list-item (click)="navigate('/dispatchEmployee/history')">
           <mat-icon class="list-icon">history</mat-icon>
           <span class="list-text">History</span>
-        </a> -->
+        </a>
+        <a mat-list-item (click)="navigate('/dispatchEmployee/history')">
+          <mat-icon class="list-icon">history</mat-icon>
+          <span class="list-text">History</span>
+        </a>
+        <a mat-list-item (click)="navigate('/dispatchEmployee/history')">
+          <mat-icon class="list-icon">history</mat-icon>
+          <span class="list-text">History</span>
+        </a>
         <a mat-list-item (click)="navigate('/dispatchEmployee/profile')">
           <mat-icon class="list-icon">person</mat-icon>
           <span class="list-text">Profile</span>
@@ -49,4 +61,14 @@
       </div>
     </mat-sidenav-content>
   </mat-sidenav-container>
+
+  <nav>
+    <ul>
+      <li *ngFor="let menu of menus">
+        <a [routerLink]="menu.route">{{ menu.menuName }}</a>
+      </li>
+    </ul>
+  </nav>
+  
+  
   

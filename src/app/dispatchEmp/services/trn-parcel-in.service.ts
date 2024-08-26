@@ -27,6 +27,15 @@ export class TrnParcelInService {
   getDepartmentsByLocationName(locName: string): Observable<string[]> {
     return this.http.get<string[]>(`${this.baseUrl}/departments/by-name/${locName}`);
   }
+  
+  getSenderNameByLocCodeAndPsa(locName: string, psa: string): Observable<string[]> {
+    const url = `${this.baseUrl}/namesBy/${locName}/${psa}`;
+    return this.http.get<string[]>(url);
+  }
+
+  getRecipientNameByDept(dept: string): Observable<string[]> {
+    return this.http.get<string[]>(`${this.baseUrl}/names/${dept}`,{ withCredentials: true });
+  }
 
   getAllEmployees(): Observable<string[]> {
     return this.http.get<string[]>(`${this.baseUrl}/names/by/all-loc`);

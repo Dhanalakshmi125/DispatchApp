@@ -72,12 +72,20 @@ export class ParcelOutComponent implements OnInit {
     this.loadSenderDepartments();
     this.loadCouriers();
     // this.loadRecipientDepartments();
-    this.loadSenderNames();
-    this.loadRecipientNames();
+    //this.loadSenderNames();
+    // this.loadRecipientNames();
 
     this.parcelOutForm.get('recipientLocCode')?.valueChanges.subscribe(recipientLocCode => {
       this.loadDepartmentsByLocationName(recipientLocCode);
     });
+    this.parcelOutForm.get('recipientDepartment')?.valueChanges.subscribe(()=> {
+      this.loadRecipientNamesByDepartment();
+    });
+
+    this.parcelOutForm.get('senderDepartment')?.valueChanges.subscribe(() => {
+      this.loadSenderNames();
+    });
+
 
     this.parcelOutForm.get('recipientLocCode')?.valueChanges.pipe(
       startWith(''),
@@ -112,9 +120,27 @@ export class ParcelOutComponent implements OnInit {
   }
 
   loadDepartmentsByLocationName(recipientLocCode: string): void {
-    this.parcelOutService.getDepartmentsByLocationName(recipientLocCode).subscribe(departments => {
+    const locName = recipientLocCode.split('(')[0];
+    this.parcelOutService.getDepartmentsByLocationName(locName).subscribe(departments => {
       this.recipientDepartments = departments;
     });
+  }
+  loadRecipientNamesByDepartment(): void {
+    const recipientLocCode = this.parcelOutForm.get('recipientLocCode')?.value;
+    const recipientDepartment = this.parcelOutForm.get('recipientDepartment')?.value;
+
+    if (recipientLocCode && recipientDepartment) {
+      const locName = recipientLocCode.split('(')[0].trim();
+      this.parcelOutService.getRecipientNamesByLocCodeAndPsa(locName,recipientDepartment).subscribe({
+        next: (recipients) => {
+          this.recipients = recipients;
+          console.log('Received Recipient Names:', this.recipients);  // Debugging
+        },
+        error: (err) => {
+          console.error('Failed to load recipient names:', err);
+        }
+      });
+    }
   }
 
   loadSenderDepartments(): void {
@@ -124,16 +150,28 @@ export class ParcelOutComponent implements OnInit {
   }
 
   loadSenderNames(): void {
-    this.parcelOutService.getAllEmployees().subscribe(senders => {
-      this.senders = senders;
-    });
-  }
+    // const recipientLocCode = this.parcelOutForm.get('recipientLocCode')?.value;
+     const senderDepartment = this.parcelOutForm.get('senderDepartment')?.value;
+ 
+     if (senderDepartment) {
+       this.parcelOutService.getSenderNameByDept(senderDepartment).subscribe({
+         next: (senders) => {
+          console.log('sender names',senders);
+           this.senders = senders;
+           console.log('Received senders Names:', this.senders);  // Debugging
+         },
+         error: (err) => {
+           console.error('Failed to load senders names:', err);
+         }
+       });
+     }
+   }
 
-  loadRecipientNames(): void {
-    this.parcelOutService.getAllEmployees().subscribe(recipients => {
-      this.recipients = recipients;
-    });
-  }
+  // loadRecipientNames(): void {
+  //   this.parcelOutService.getAllEmployees().subscribe(recipients => {
+  //     this.recipients = recipients;
+  //   });
+  // }
 
   loadCouriers(): void {
     this.parcelOutService.getAllCouriers().subscribe(couriers => {

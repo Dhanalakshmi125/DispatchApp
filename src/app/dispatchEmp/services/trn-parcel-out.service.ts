@@ -28,8 +28,17 @@ export class TrnParcelOutService {
     return this.http.get<string[]>(`${this.baseUrl}/names/by/all-loc`);
   }
 
+  getRecipientNamesByLocCodeAndPsa(locName: string, psa: string): Observable<string[]> {
+    const url = `${this.baseUrl}/namesBy/${locName}/${psa}`;
+    return this.http.get<string[]>(url);
+  }
+
   getSenderDepartments(): Observable<string[]> {
     return this.http.get<string[]>(`${this.baseUrl}/departments-by-loccode`, {withCredentials: true });
+  }
+
+  getSenderNameByDept(dept: string): Observable<string[]> {
+    return this.http.get<string[]>(`${this.baseUrl}/names/${dept}`,{ withCredentials: true });
   }
   getAllCouriers(): Observable<MstCourier[]> {
     return this.http.get<MstCourier[]>(`${this.baseUrl}/courier-names`);

@@ -13,6 +13,10 @@ import { HistoryComponent } from './dispatchEmp/components/history/history.compo
 import { ReportsComponent } from './dispatchEmp/components/reports/reports.component';
 import { ParcelEditComponent } from './dispatchEmp/components/parcel-edit/parcel-edit.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { EmpHistoryComponent } from './ioclEmp/components/emp-history/emp-history.component';
+import { EmpReportsComponent } from './ioclEmp/components/emp-reports/emp-reports.component';
+import { LocAdminComponent } from './ioclEmp/components/loc-admin/loc-admin.component';
+import { LocImplementationComponent } from './ioclEmp/components/loc-implementation/loc-implementation.component';
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -30,7 +34,11 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     HttpClientModule,
     ParcelEditComponent,
     ParcelOutComponent,
-    MatPaginatorModule
+    MatPaginatorModule,
+    EmpHistoryComponent,
+    EmpReportsComponent,
+    LocAdminComponent,
+    LocImplementationComponent
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'

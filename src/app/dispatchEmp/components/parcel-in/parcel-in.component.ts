@@ -23,6 +23,7 @@ import { map, startWith } from 'rxjs/operators';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { matchValidator } from '../../MatchValidator';
 import { MstCourier } from '../../model/mstCourier';
+import { error } from 'console';
 
 @Component({
   selector: 'app-parcel-in',
@@ -75,12 +76,21 @@ import { MstCourier } from '../../model/mstCourier';
       this.loadLocations();
       this.loadCouriers();
       this.loadRecipientDepartments();
-      this.loadRecipientNames();
-      this.loadSenderNames();
+     // this.loadRecipientNames();
+      //this.loadSenderNames();
   
       this.parcelInForm.get('senderLocCode')?.valueChanges.subscribe(senderLocCode => {
         this.loadDepartmentsByLocationName(senderLocCode);
       });
+
+      this.parcelInForm.get('senderDepartment')?.valueChanges.subscribe(() => {
+        this.loadSenderNamesByLocationAndPSA();
+      });
+
+      this.parcelInForm.get('recipientDepartment')?.valueChanges.subscribe(() => {
+        this.loadRecipientNames();
+      });
+
   
       this.parcelInForm.get('senderLocCode')?.valueChanges.pipe(
         startWith(''),
@@ -97,6 +107,7 @@ import { MstCourier } from '../../model/mstCourier';
         map(value => this.filterRecipients(value))
       ).subscribe(filtered => this.filteredRecipients = of(filtered));
     }
+
 
     onSenderLocCodeInput(): void {
       const senderLocCode = this.parcelInForm.get('senderLocCode')?.value;
@@ -115,12 +126,39 @@ import { MstCourier } from '../../model/mstCourier';
     }
   
     loadDepartmentsByLocationName(senderLocCode: string): void {
-      this.parcelInService.getDepartmentsByLocationName(senderLocCode).subscribe(departments => {
+      const locName = senderLocCode.split('(')[0];
+      this.parcelInService.getDepartmentsByLocationName(locName).subscribe(departments => {
         this.senderDepartments= departments;
 
       });
     }
-  
+
+    loadSenderNamesByLocationAndPSA(): void {
+      const senderLocCode = this.parcelInForm.get('senderLocCode')?.value;
+      const senderDepartment = this.parcelInForm.get('senderDepartment')?.value;
+    
+      console.log('Sender Location Code:', senderLocCode); // Debugging
+      console.log('Sender Department:', senderDepartment); // Debugging
+    
+      if (senderLocCode && senderDepartment) {
+        const locName = senderLocCode.split('(')[0].trim();  // Extract the locName from senderLocCode
+        console.log("locname:",locName);
+        console.log("senderdept",senderDepartment);
+        this.parcelInService.getSenderNameByLocCodeAndPsa(locName, senderDepartment).subscribe({
+          
+          next: (response) => {
+            console.log('Full Response:', response);
+           this.senders = response;
+            console.log('Received Sender Names:', this.senders);
+          },
+          error: (err) => {
+            console.error('Failed to load sender names:', err);
+          }
+        });
+        
+      }
+    }
+    
     loadCouriers(): void {
       this.parcelInService.getAllCouriers().subscribe(couriers => {
         this.couriers = couriers;
@@ -134,16 +172,26 @@ import { MstCourier } from '../../model/mstCourier';
     }
   
     loadRecipientNames(): void {
-      this.parcelInService.getAllEmployees().subscribe(recipients => {
-        this.recipients = recipients;
-      });
-    }
+      // const recipientLocCode = this.parcelOutForm.get('recipientLocCode')?.value;
+       const recipientDepartment = this.parcelInForm.get('recipientDepartment')?.value;
+       if (recipientDepartment) {
+         this.parcelInService.getRecipientNameByDept(recipientDepartment).subscribe({
+           next: (recipients) => {
+             this.recipients = recipients;
+             console.log('Received Recipient Names:', this.recipients);  // Debugging
+           },
+           error: (err) => {
+             console.error('Failed to load recipient names:', err);
+           }
+         });
+       }
+     }
 
-    loadSenderNames():void{
-      this.parcelInService.getAllEmployees().subscribe(senders => {
-        this.senders = senders;
-      });
-    }
+    // loadSenderNames():void{
+    //   this.parcelInService.getAllEmployees().subscribe(senders => {
+    //     this.senders = senders;
+    //   });
+    // }
   
     filterLocations(value: string): string[] {
       if (value.trim() === '') {
