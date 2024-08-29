@@ -13,12 +13,34 @@
     flex: 1 1 auto;
   } 
   
-  .search-bar {
+  /* .search-bar {
     width: 200px;
     margin-right: 16px;
-    /* border: 2px solid darkblue; */
+     border: 2px solid darkblue; 
     margin-top: 20px;
+  } */
+  .profile-button {
+    margin-right: 8px;
+    display: flex;
+    align-items: center;
   }
+  
+  .profile-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  .profile-name {
+    font-weight: bold;
+    font-size: 16px;
+  }
+  
+  .profile-info {
+    font-size: 14px;
+    color: #757575;
+  }
+  
 
   .main-content {
     padding: 16px;
