@@ -47,4 +47,16 @@
     height: 24px;
     width: 24px;
   }
+  mat-list-item {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
   
+  mat-list-item:hover {
+    background-color: #f0f0f0; /* Optional hover effect */
+  }
+  
+  mat-icon {
+    margin-right: 8px; /* Space between the icon and text */
+  }

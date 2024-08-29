@@ -12,9 +12,9 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTableModule } from '@angular/material/table';
 import { DisEmpVerOtpComponent } from '../../../login/components/dis-emp-ver-otp/dis-emp-ver-otp.component';
 import { DisEmpVerOtpService } from '../../../login/services/dis-emp-ver-otp.service';
-import { HomeService } from '../../services/home.service';
+import { HomeService } from '../../../services/home.service';
 import { formatDate } from '@angular/common'; // Import for formatting date
-import { ParcelTotals } from '../../model/parcelTotals';
+import { ParcelTotals } from '../../../model/parcelTotals';
 @Component({
   selector: 'app-home',
   standalone: true,

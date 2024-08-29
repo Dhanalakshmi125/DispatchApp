@@ -17,6 +17,9 @@ import { EmpHistoryComponent } from './ioclEmp/components/emp-history/emp-histor
 import { EmpReportsComponent } from './ioclEmp/components/emp-reports/emp-reports.component';
 import { LocAdminComponent } from './ioclEmp/components/loc-admin/loc-admin.component';
 import { LocImplementationComponent } from './ioclEmp/components/loc-implementation/loc-implementation.component';
+import { EmpProfileComponent } from './ioclEmp/components/emp-profile/emp-profile.component';
+import { DispatchComponent } from './ioclEmp/components/dispatch/dispatch.component';
+import { UserEditComponent } from './ioclEmp/components/user-edit/user-edit.component';
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -38,7 +41,10 @@ import { LocImplementationComponent } from './ioclEmp/components/loc-implementat
     EmpHistoryComponent,
     EmpReportsComponent,
     LocAdminComponent,
-    LocImplementationComponent
+    LocImplementationComponent,
+    EmpProfileComponent,
+    DispatchComponent,
+    UserEditComponent
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'

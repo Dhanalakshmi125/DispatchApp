@@ -13,12 +13,10 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTableModule } from '@angular/material/table';
 import { FormsModule } from '@angular/forms';
 import { MatGridListModule } from '@angular/material/grid-list';
-
 import { MatNativeDateModule, MatOption } from '@angular/material/core';
 import { MatDatepicker, MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSelectModule } from '@angular/material/select';
-import { ReportsService } from '../../services/reports.service';
-
+import { ReportsService } from '../../../services/reports.service';
 @Component({
   selector: 'app-reports',
   standalone: true,
@@ -26,8 +24,6 @@ import { ReportsService } from '../../services/reports.service';
     MatButtonModule, MatCardModule, FormsModule, ReactiveFormsModule, NgIf,
     MatFormFieldModule, MatInputModule, MatDialogModule, MatIconModule,
     MatSelectModule, MatDatepickerModule, MatNativeDateModule, NgFor,
-    FormsModule, 
-    ReactiveFormsModule,
     MatTableModule,
     JsonPipe,
     DatePipe,

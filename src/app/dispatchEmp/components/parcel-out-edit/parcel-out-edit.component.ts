@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { TrnParcelOutService } from '../../services/trn-parcel-out.service';
-import { HistoryService } from '../../services/history.service';
-import { TrnParcelOut } from '../../model/trnParcelOut';
+import { TrnParcelOutService } from '../../../services/trn-parcel-out.service';
+import { HistoryService } from '../../../services/history.service';
+import { TrnParcelOut } from '../../../model/trnParcelOut';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';

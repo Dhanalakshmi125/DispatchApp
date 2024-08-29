@@ -1,1 +1,116 @@
-<p>loc-admin works!</p>
+<!-- <p>loc-admin works!</p> -->
+<mat-card>
+    <mat-card-header>
+      <div class="title-bar">
+        <div class="title-left">
+          <mat-icon>people</mat-icon>
+          <span>Admin Personnel</span>
+        </div>
+        <button mat-raised-button color="primary" (click)="addNew()" class="add-button">
+          <mat-icon>add_circle_outline</mat-icon>
+          Add
+        </button>
+      </div>
+    </mat-card-header>
+    <mat-card-content>
+        <div class="action-bar">
+          <mat-form-field appearance="outline">
+            <mat-label>Filter By Empcode</mat-label>
+            <input matInput placeholder="Enter Loc Code Code" [(ngModel)]="locCodeFilter" (input)="applyFilter()">
+          </mat-form-field>
+          <button mat-button (click)="clearFilter()">Clear</button>
+        </div>
+        <div *ngIf="filteredData.length > 0">
+            <!-- <h3>Filtered</h3> -->
+            <table mat-table [dataSource]="filteredData" class="mat-elevation-z8">
+              <ng-container *ngFor="let column of displayedColumns" [matColumnDef]="column">
+                <mat-header-cell *matHeaderCellDef> {{ column }} </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{ element[column] }} </mat-cell>
+              </ng-container>
+          
+              <!-- View Column -->
+              <ng-container matColumnDef="view">
+                <mat-header-cell *matHeaderCellDef> View </mat-header-cell>
+                <mat-cell *matCellDef="let user">
+                  <button mat-icon-button color="primary" (click)="openViewDialog(user)">
+                    <mat-icon>visibility</mat-icon>
+                  </button>
+                </mat-cell>
+              </ng-container>
+          
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+          </div>
+        </mat-card-content>
+    </mat-card>
+
+    <ng-template #userDialogTemplate let-data>
+        <mat-card class="userDetails">
+          <mat-card-header>
+            <button mat-icon-button (click)="onClose()" class="close-button">
+              <mat-icon>close</mat-icon>
+            </button>
+            <span class="header-title">Employee Details</span>
+            <div class="profile-photo-container">
+                <img src="../../../../assets/profile.webp" alt="Profile Photo" class="profile-image">
+            </div>
+           
+          </mat-card-header>
+          <mat-card-content>
+            <div class="details-row">
+              <strong>Loc Code</strong>
+              <span>:&nbsp;{{data.LocCode}}</span>
+            </div>
+            <div class="details-row">
+              <strong>User Id</strong>
+              <span>:&nbsp;{{data.userId}}</span>
+            </div>
+            <div class="details-row">
+              <strong>User Name</strong>
+              <span>:&nbsp;{{data.userName}}</span>
+            </div>
+            <div class="details-row">
+              <strong>Mobile No</strong>
+              <span>:&nbsp;{{data.mobileNumber}}</span>
+            </div>
+            <div class="details-row">
+              <strong>Role Id</strong>
+              <span>:&nbsp;{{data.roleId}}</span>
+            </div>
+          
+            <div class="details-row">
+              <strong>Created By</strong>
+              <span>:&nbsp;{{data.createdBy}}</span>
+            </div>
+            <div class="details-row">
+              <strong>Created Date</strong>
+              <span>:&nbsp;{{data.createdDate | date}}</span>
+            </div>
+            <div class="details-row">
+                <strong>Record Status</strong>
+                <span>:&nbsp;{{data.status}}</span>
+              </div>
+           
+          </mat-card-content>
+          <mat-card-actions class="buttons">
+            <button mat-raised-button color="primary" class="w-50" (click)="editUser(data)" >Edit</button>
+            <button mat-raised-button color="accent" class="w-50" (click)="deleteUser(data)">Delete</button>
+          </mat-card-actions>
+        </mat-card>
+      </ng-template>
+      
+      
+      <!-- Confirm Dialog Template -->
+      <!-- <ng-template #confirmDialogTemplate let-data>
+        <mat-card>
+          <mat-card-content>
+            <p style="font-weight: bold;">Are you sure you want to change the status of {{data.userName}}?</p>
+          </mat-card-content>
+           <mat-card-actions>
+            <button mat-button color="primary" (click)="deleteParcel(data.type, data.trackingId)">Yes</button>
+            <button mat-button color="accent" (click)="dialogRef.close()">No</button>
+          </mat-card-actions> 
+        </mat-card>
+      </ng-template> -->
+          

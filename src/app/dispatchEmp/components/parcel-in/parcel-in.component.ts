@@ -14,15 +14,15 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DatePipe } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
-import { TrnParcelInService } from '../../services/trn-parcel-in.service';
+import { TrnParcelInService } from '../../../services/trn-parcel-in.service';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
-import { TrnParcelIn } from '../../model/trnParcelIn';
+import { TrnParcelIn } from '../../../model/trnParcelIn';
 import { Observable, of } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { matchValidator } from '../../MatchValidator';
-import { MstCourier } from '../../model/mstCourier';
+import { MstCourier } from '../../../model/mstCourier';
 import { error } from 'console';
 
 @Component({

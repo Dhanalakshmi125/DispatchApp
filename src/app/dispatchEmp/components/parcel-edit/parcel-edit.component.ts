@@ -12,21 +12,21 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTableModule } from '@angular/material/table';
 import { DisEmpVerOtpComponent } from '../../../login/components/dis-emp-ver-otp/dis-emp-ver-otp.component';
 import { DisEmpVerOtpService } from '../../../login/services/dis-emp-ver-otp.service';
-import { HomeService } from '../../services/home.service';
+import { HomeService } from '../../../services/home.service';
 import { formatDate } from '@angular/common'; // Import for formatting date
-import { ParcelTotals } from '../../model/parcelTotals';
+import { ParcelTotals } from '../../../model/parcelTotals';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatGridListModule } from '@angular/material/grid-list';
-import { TrnParcelInService } from '../../services/trn-parcel-in.service';
-import { TrnParcelOutService } from '../../services/trn-parcel-out.service';
-import { TrnParcelIn } from '../../model/trnParcelIn';
-import { TrnParcelOut } from '../../model/trnParcelOut';
+import { TrnParcelInService } from '../../../services/trn-parcel-in.service';
+import { TrnParcelOutService } from '../../../services/trn-parcel-out.service';
+import { TrnParcelIn } from '../../../model/trnParcelIn';
+import { TrnParcelOut } from '../../../model/trnParcelOut';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
-import { HistoryService } from '../../services/history.service';
+import { HistoryService } from '../../../services/history.service';
 import { Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 

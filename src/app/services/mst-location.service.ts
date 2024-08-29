@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { MstLocation } from '../model/mstLocation';
+import { MstLocation } from '../../model/mstLocation';
 import { Observable } from 'rxjs';
 
 @Injectable({

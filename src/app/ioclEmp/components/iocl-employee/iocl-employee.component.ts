@@ -12,7 +12,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { Menu } from '../../models/menu';
 import { MenuService } from '../../services/menu.service';
-import { IoclEmpServiceService } from '../../../login/services/iocl-emp-service.service';
+import { IoclEmpServiceService } from '../../../services/iocl-emp-service.service';
 @Component({
   selector: 'app-iocl-employee',
   standalone: true,
@@ -71,6 +71,23 @@ export class IoclEmployeeComponent {
   // filterChildMenus(menuId: number) {
   //   return this.menus.filter((m) => m.parentMenuId !== undefined && m.parentMenuId === menuId);
   // }
+
+  logout(): void {
+    this.ioclEmpService.signOut().subscribe({
+      next: () => {
+        // Handle successful logout, e.g., navigate to the login page
+        console.log("user logout success ")
+        this.router.navigate(['/login']);
+      },
+      error: (err) => {
+        // Handle logout error if necessary
+        console.error('Logout failed', err);
+      }
+    });
+  }
   
+
+
+
 }
 

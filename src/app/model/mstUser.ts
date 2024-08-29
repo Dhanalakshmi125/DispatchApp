@@ -2,6 +2,7 @@ export class MstUser {
     locCode: string;
     userId: string;
     userName: string;
+    mobileNumber:number; 
     password: string;
     roleId: string;
     status: string;
@@ -13,6 +14,7 @@ export class MstUser {
       this.locCode=data.locCode;
       this.userId=data.userId;
       this.userName=data.userName;
+      this.mobileNumber=data.mobileNumber
       this.password=data.password;
       this.roleId=data.roleId;
       this.status=data.status;

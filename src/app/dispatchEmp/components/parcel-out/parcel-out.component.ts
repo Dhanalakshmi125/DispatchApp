@@ -16,8 +16,8 @@ import { DatePipe } from '@angular/common';
 import { Observable, of } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { TrnParcelOutService } from '../../services/trn-parcel-out.service';
-import { MstCourier } from '../../model/mstCourier';
+import { TrnParcelOutService } from '../../../services/trn-parcel-out.service';
+import { MstCourier } from '../../../model/mstCourier';
 import { Router } from '@angular/router';
 
 @Component({

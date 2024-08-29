@@ -3,4 +3,5 @@ export interface Menu {
     menuName: string;
     parentMenuId?: string;
     route: string;
+    icons:string;
   }

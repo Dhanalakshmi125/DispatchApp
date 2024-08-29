@@ -19,43 +19,50 @@ import { ParcelEditComponent } from './dispatchEmp/components/parcel-edit/parcel
 import { ParcelOutEditComponent } from './dispatchEmp/components/parcel-out-edit/parcel-out-edit.component';
 import { LocImplementationComponent } from './ioclEmp/components/loc-implementation/loc-implementation.component';
 import { LocAdminComponent } from './ioclEmp/components/loc-admin/loc-admin.component';
+import { EmpProfileComponent } from './ioclEmp/components/emp-profile/emp-profile.component';
+import { DispatchComponent } from './ioclEmp/components/dispatch/dispatch.component';
+import { UserEditComponent } from './ioclEmp/components/user-edit/user-edit.component';
 export const routes: Routes = [
-    {path:"login",component:LoginComponent},
-    {path:"disEmpReqOtp",component:DisEmpReqOtpComponent},
-    {path:"disEmpVerOtp",component:DisEmpVerOtpComponent},
-    {path:"ioclEmp",component:IoclEmpComponent},
-    // {path:"ioclEmp",component:IoclEmpComponent},
-     {path:'',redirectTo:'login',pathMatch:'full'},
-    //{path:'',redirectTo:'disEmpVerOtp',pathMatch:'full'},
-    {
-        path: 'dispatchEmployee',
-        component: DispatchEmployeeComponent,
-        children: [
-          // { path: '', redirectTo: 'home', pathMatch: 'full' },
-          { path: 'home', component: HomeComponent },
-          { path: 'parcelIn', component: ParcelInComponent },
-          { path: 'parcelOut', component: ParcelOutComponent },
-          { path: 'profile', component: ProfileComponent },
-          { path: '', redirectTo: 'home', pathMatch: 'full' },
-          { path: 'history', component: HistoryComponent } ,
-          { path: 'reports', component: ReportsComponent },
-          { path: 'parcelEdit', component: ParcelEditComponent },
-          { path: 'parcelOutEdit', component: ParcelOutEditComponent }
-        ]
-      },
-      // {path:'',redirectTo:'ioclEmployee',pathMatch:'full'},
-      {
-        path:'ioclEmployee',
-        component:IoclEmployeeComponent,
-        children:[
-          { path:'dashboard',component:DashboardComponent },
-        //  { path:'profile', component:ProfileComponent},
-         // { path: 'dashboard', component: DashboardComponent },
-          { path: 'loc-implementation', component: LocImplementationComponent },
-          { path: 'loc-admin', component: LocAdminComponent },
-          { path: 'history', component: EmpHistoryComponent },
-          { path: 'reports', component: EmpReportsComponent },
-         // { path: '', redirectTo: '/dashboard', pathMatch: 'full' } // Default route
-        ]
-      }
+  { path: "login", component: LoginComponent },
+  { path: "disEmpReqOtp", component: DisEmpReqOtpComponent },
+  { path: "disEmpVerOtp", component: DisEmpVerOtpComponent },
+  { path: "ioclEmp", component: IoclEmpComponent },
+  // {path:"ioclEmp",component:IoclEmpComponent},
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  //{path:'',redirectTo:'disEmpVerOtp',pathMatch:'full'},
+  {
+    path: 'dispatchEmployee',
+    component: DispatchEmployeeComponent,
+    children: [
+      // { path: '', redirectTo: 'home', pathMatch: 'full' },
+      { path: 'home', component: HomeComponent },
+      { path: 'parcelIn', component: ParcelInComponent },
+      { path: 'parcelOut', component: ParcelOutComponent },
+      { path: 'profile', component: ProfileComponent },
+      { path: '', redirectTo: 'home', pathMatch: 'full' },
+      { path: 'history', component: HistoryComponent },
+      { path: 'reports', component: ReportsComponent },
+      { path: 'parcelEdit', component: ParcelEditComponent },
+      { path: 'parcelOutEdit', component: ParcelOutEditComponent }
+    ]
+  },
+  // {path:'',redirectTo:'ioclEmployee',pathMatch:'full'},
+  {
+    path: 'ioclEmployee',
+    component: IoclEmployeeComponent,
+    children: [
+      { path: 'dashboard', component: DashboardComponent },
+      //  { path:'profile', component:ProfileComponent},
+      // { path: 'dashboard', component: DashboardComponent },
+      { path: 'loc-implementation', component: LocImplementationComponent },
+      { path: 'loc-admin', component: LocAdminComponent },
+      { path: 'history', component: EmpHistoryComponent },
+      { path: 'reports', component: EmpReportsComponent },
+      { path: 'profile', component: EmpProfileComponent },
+      { path: 'dispatch', component: DispatchComponent },
+      {path:'userEdit', component:UserEditComponent}
+
+      // { path: '', redirectTo: '/dashboard', pathMatch: 'full' } // Default route
+    ]
+  }
 ];

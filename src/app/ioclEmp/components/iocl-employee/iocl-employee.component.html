@@ -23,7 +23,7 @@
         </button>
       </mat-toolbar>
       <mat-nav-list>
-        <a mat-list-item (click)="navigate('/ioclEmployee/dashboard')">
+        <!-- <a mat-list-item (click)="navigate('/ioclEmployee/dashboard')">
           <mat-icon class="list-icon">dashboard</mat-icon>
           <span class="list-text">Dashboard</span>
         </a>
@@ -34,8 +34,8 @@
         <a mat-list-item (click)="navigate('/dispatchEmployee/history')">
           <mat-icon class="list-icon">history</mat-icon>
           <span class="list-text">History</span>
-        </a>
-        <a mat-list-item (click)="navigate('/dispatchEmployee/history')">
+        </a> -->
+        <!-- <a mat-list-item (click)="navigate('/dispatchEmployee/history')">
           <mat-icon class="list-icon">history</mat-icon>
           <span class="list-text">History</span>
         </a>
@@ -46,7 +46,16 @@
         <a mat-list-item (click)="navigate('/dispatchEmployee/profile')">
           <mat-icon class="list-icon">person</mat-icon>
           <span class="list-text">Profile</span>
-        </a>
+        </a> -->
+         
+
+        <mat-list>
+          <mat-list-item *ngFor="let menu of menus" [routerLink]="menu.route">
+            <mat-icon>{{ menu.icons }}</mat-icon>
+            <span>{{ menu.menuName }}</span>
+          </mat-list-item>
+        </mat-list>
+
       </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content>

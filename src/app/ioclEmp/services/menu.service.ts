@@ -11,6 +11,6 @@ export class MenuService {
   private menuUrl='http://localhost:8182/api/menus/role';
   constructor(private http:HttpClient) { }
   getMenusByRole(roleId: string): Observable<Menu[]> {
-    return this.http.get<Menu[]>(`${this.menuUrl}/${roleId}`);
+    return this.http.get<Menu[]>(`${this.menuUrl}/${roleId}`,{withCredentials: true});
   }
 }
