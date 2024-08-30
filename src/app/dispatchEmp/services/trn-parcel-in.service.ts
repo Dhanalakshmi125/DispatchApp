@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { MstLocation } from '../model/mstLocation';
-import { MstDepartment } from '../model/mstDepartment';
-import { MstUser } from '../model/mstUser';
-import { MstCourier } from '../model/mstCourier';
-import { MstEmployee} from '../model/mstEmployee';
-import { TrnParcelIn } from '../model/trnParcelIn';
-import { StatusCodeModal } from '../model/statusCodeModal';
-import { Page } from '../model/page';
+import { MstLocation } from '../../model/mstLocation';
+import { MstDepartment } from '../../model/mstDepartment';
+import { MstUser } from '../../model/mstUser';
+import { MstCourier } from '../../model/mstCourier';
+import { MstEmployee} from '../../model/mstEmployee';
+import { TrnParcelIn } from '../../model/trnParcelIn';
+import { StatusCodeModal } from '../../model/statusCodeModal';
+import { Page } from '../../model/page';
 import { HttpParams } from '@angular/common/http';
 @Injectable({
   providedIn: 'root'
@@ -71,5 +71,6 @@ export class TrnParcelInService {
   deleteParcelIn(inTrackingId: number): Observable<any> {
   return this.http.delete<any>(`${this.parcelInUrl}/${inTrackingId}`,{ withCredentials: true });
 }
+
 
 }

@@ -14,7 +14,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DatePipe } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
-import { TrnParcelInService } from '../../../services/trn-parcel-in.service';
+import { TrnParcelInService } from '../../services/trn-parcel-in.service';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { TrnParcelIn } from '../../../model/trnParcelIn';

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { MstDepartment } from '../../model/mstDepartment';
+import { MstDepartment } from '../model/mstDepartment';
 import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'

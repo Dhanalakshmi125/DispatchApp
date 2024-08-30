@@ -10,7 +10,7 @@ import { NgIf } from '@angular/common';
 import { RouterModule ,Router} from '@angular/router';
 import { IoclEmployeeComponent } from '../../../ioclEmp/components/iocl-employee/iocl-employee.component';
 import { IoclEmpServiceService } from '../../../services/iocl-emp-service.service';
-import { Console } from 'console';
+
 @Component({
   selector: 'app-iocl-emp',
   standalone: true,

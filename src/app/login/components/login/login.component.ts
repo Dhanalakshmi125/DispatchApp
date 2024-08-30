@@ -7,7 +7,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { RouterModule, Routes } from '@angular/router';
-import { routes } from '../../../app.routes';
 import { NgIf } from '@angular/common';
 import { IoclEmpComponent } from '../iocl-emp/iocl-emp.component';
 import { DisEmpReqOtpComponent } from '../dis-emp-req-otp/dis-emp-req-otp.component';
@@ -16,7 +15,11 @@ import { DisEmpReqOtpComponent } from '../dis-emp-req-otp/dis-emp-req-otp.compon
   selector: 'app-login',
   standalone: true,
   imports: [
-    MatButtonModule,MatCardModule,FormsModule,ReactiveFormsModule,NgIf,
+    MatButtonModule,
+    MatCardModule,
+    FormsModule,
+    ReactiveFormsModule,
+    NgIf,
     MatFormFieldModule,
     MatInputModule,
     MatDialogModule,

@@ -17,7 +17,7 @@ import { formatDate } from '@angular/common'; // Import for formatting date
 import { ParcelTotals } from '../../../model/parcelTotals';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatGridListModule } from '@angular/material/grid-list';
-import { TrnParcelInService } from '../../../services/trn-parcel-in.service';
+import { TrnParcelInService } from '../../services/trn-parcel-in.service';
 import { TrnParcelOutService } from '../../../services/trn-parcel-out.service';
 import { TrnParcelIn } from '../../../model/trnParcelIn';
 import { TrnParcelOut } from '../../../model/trnParcelOut';

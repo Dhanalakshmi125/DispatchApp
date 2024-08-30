@@ -18,7 +18,7 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { TrnParcelIn } from '../../../model/trnParcelIn';
 import { TrnParcelOut } from '../../../model/trnParcelOut';
-import { Router } from 'express';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',

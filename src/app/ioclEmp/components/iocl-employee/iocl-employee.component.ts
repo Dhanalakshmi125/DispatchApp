@@ -13,6 +13,7 @@ import { MatInputModule } from '@angular/material/input';
 import { Menu } from '../../models/menu';
 import { MenuService } from '../../services/menu.service';
 import { IoclEmpServiceService } from '../../../services/iocl-emp-service.service';
+import { MatMenu, MatMenuModule } from '@angular/material/menu';
 @Component({
   selector: 'app-iocl-employee',
   standalone: true,
@@ -32,7 +33,9 @@ import { IoclEmpServiceService } from '../../../services/iocl-emp-service.servic
     FormsModule,
     ReactiveFormsModule,
     CommonModule,
-    RouterModule
+    RouterModule,
+    MatMenuModule
+    
   ],
   templateUrl: './iocl-employee.component.html',
   styleUrl: './iocl-employee.component.css'

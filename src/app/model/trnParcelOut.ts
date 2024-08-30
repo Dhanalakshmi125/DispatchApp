@@ -15,7 +15,6 @@ export class TrnParcelOut {
   createdBy?: string;
   createdDate?: Date;
   lastUpdatedDate?: Date;
-
   constructor(data: Partial<TrnParcelOut> = {}) {
     this.senderLocCode = data.senderLocCode || '';
     this.outTrackingId = data.outTrackingId || 0;
