@@ -145,7 +145,7 @@
       </div>
       <div class="details-row">
         <strong>Last Update Date</strong>
-        <span>:&nbsp;{{data.lastUpdateDate | date}}</span>
+        <span>:&nbsp;{{data.lastUpdatedDate ? (data.lastUpdatedDate | date:'dd-MM-yyyy HH:mm:ss') : 'N/A'}}</span>
       </div>
     </mat-card-content>
     <mat-card-actions class="buttons">
@@ -232,7 +232,7 @@
       </div>
       <div class="details-row">
         <strong>Last Update Date</strong>
-        <span>:&nbsp;{{data.lastUpdateDate | date}}</span>
+        <span>:&nbsp;{{data.lastUpdatedDate ? (data.lastUpdatedDate | date:'dd-MM-yyyy HH:mm:ss') : 'N/A'}}</span>
       </div>
     </mat-card-content>
     <mat-card-actions class="buttons">

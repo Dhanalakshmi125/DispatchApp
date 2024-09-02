@@ -48,66 +48,83 @@ import { MatToolbarModule } from '@angular/material/toolbar';
   templateUrl: './loc-admin.component.html',
   styleUrl: './loc-admin.component.css'
 })
-export class LocAdminComponent {
-  @ViewChild('userDialogTemplate') userDialogTemplate!: TemplateRef<any>;
-  displayedColumns: string[] = ['locCode', 'userId', 'userName', 'mobileNo', 'roleId', 'status'];
-  filteredData: MstUser[] = [];
-  locCodeFilter: string = '';  // Model for the loc_code filter
+export class LocAdminComponent{
 
+@ViewChild('userDialogTemplate') userDialogTemplate!: TemplateRef<any>;
+displayedColumns: string[] = ['locCode', 'userId', 'userName', 'mobileNumber', 'roleId', 'status','view'];
+originalData: MstUser[] = [];
+filteredData: MstUser[] = [];
+locCodeFilter: string = '';  // Model for the loc_code filter
 
-  constructor(private mstUserService: MstUserService,
-     private dialog: MatDialog,
-     private router: Router,
-  ) {}
+constructor(
+  private mstUserService: MstUserService,
+  private dialog: MatDialog,
+  private router: Router
+) {}
 
-  ngOnInit(): void {
-    this.fetchAllUsers();
+ngOnInit(): void {
+  this.fetchAllUsers();
+}
+
+fetchAllUsers(): void {
+  this.mstUserService.getAllUsers().subscribe(data => {
+    this.originalData = data;
+    this.filteredData = data;  // Initialize filteredData with the full data
+  }, error => {
+    console.error('Error fetching users', error);
+  });
+}
+
+openViewDialog(user: MstUser): void {
+  const dialogRef = this.dialog.open(this.userDialogTemplate, {
+    width: '400px',
+    data: user
+  });
+
+  dialogRef.afterClosed().subscribe(result => {
+    console.log('The dialog was closed');
+    // Handle any actions after dialog is closed, if needed
+  });
+}
+
+applyFilter(): void {
+  if (this.locCodeFilter) {
+    this.filteredData = this.originalData.filter(user =>
+      user.locCode.toLowerCase().includes(this.locCodeFilter.toLowerCase())
+    );
+  } else {
+    this.filteredData = [...this.originalData];  // Reset to original data
   }
+}
 
-  fetchAllUsers(): void {
-    this.mstUserService.getAllUsers().subscribe(data => {
-      this.filteredData = data;
-    }, error => {
-      console.error('Error fetching users', error);
-    });
-  }
+clearFilter(): void {
+  this.locCodeFilter = '';
+  this.filteredData = [...this.originalData];  // Reset to original data
+}
 
-  openViewDialog(user: any): void {
-    const dialogRef = this.dialog.open(this.userDialogTemplate, {
-      width: '400px',
-      data: user
-    });
+editUser(userData: MstUser): void {
+  this.dialog.closeAll();
+  this.mstUserService.setUserData(userData);
+  this.router.navigate(['/ioclEmployee/userEdit']);
+}
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      // Handle any actions after dialog is closed, if needed
-    });
-  }
+deleteUser(user: MstUser): void {
+  // const confirmDelete = confirm(`Are you sure you want to delete the user ${user.userName}?`);
+  // if (confirmDelete) {
+  //   // Call the delete service method here
+  //   this.mstUserService.deleteUser(user.userId).subscribe(() => {
+  //     this.fetchAllUsers();  // Refresh the user list after deletion
+  //   }, error => {
+  //     console.error('Error deleting user', error);
+  //   });
+  // }
+}
 
-  applyFilter(): void {
-    if (this.locCodeFilter) {
-      this.filteredData = this.filteredData.filter(user => 
-        user.locCode.toLowerCase().includes(this.locCodeFilter.toLowerCase())
-      );
-    } else {
-      this.fetchAllUsers();  // Reset the data if no filter is applied
-    }
-  }
+addNew(): void {
+  this.router.navigate(['/ioclEmployee/addLocAdmin']);
+}
 
-  clearFilter(): void {
-    this.filteredData = [];
-    this.fetchAllUsers();
-  }
-  editUser(userData:MstUser) {
-    this.dialog.closeAll();
-   this.mstUserService.setUserData(userData);
-   this.router.navigate(['/ioclEmployee/userEdit']);
- }
- deleteUser(data:any)
- {}
- addNew()
- {}
- onClose()
- {}
-
+onClose(): void {
+  this.dialog.closeAll();  // Closes the currently open dialog
+}
 }

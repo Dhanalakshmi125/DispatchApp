@@ -10,8 +10,10 @@ import { TrnParcelOut } from '../model/trnParcelOut';
 })
 export class IoclEmpServiceService {
   private baseUrl='http://localhost:8182/api/v1/employee';
+  private disUrl='http://localhost:8182/api/v1/dispatch';
   
   empData:any='';
+  userHistory:any='';
 
   constructor(private http:HttpClient) { }
 
@@ -39,7 +41,6 @@ export class IoclEmpServiceService {
     return this.http.post(`${this.baseUrl}/signout`, {withCredentials: true } ,{ responseType: 'text' });
   }
   
- 
   getMyIncomingParcelsToday(page: number = 0, size: number = 5): Observable<Page<TrnParcelIn>> {
     // Create query parameters
     let params = new HttpParams()
@@ -99,7 +100,21 @@ export class IoclEmpServiceService {
       .set('type', type);
     return this.http.get<any[]>(`${this.baseUrl}/history/employee`, { params,withCredentials:true});
 }
+getEmployeeCodes(): Observable<string[]> {
+  return this.http.get<string[]>(`${this.baseUrl}/empCodes`);
+}
 
+getLocationNames(): Observable<string[]> {
+  return this.http.get<string[]>(`${this.disUrl}/locNames`);
+}
+
+getEmployeesByLoc(locCode: string): Observable<string[]> {
+  return this.http.get<string[]>(`${this.baseUrl}/names/${locCode}`);
+}
+
+getRoles(): Observable<string[]> {
+  return this.http.get<string[]>(`${this.baseUrl}/roles`,{withCredentials:true});
+}
 
 
 }

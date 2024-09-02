@@ -20,6 +20,7 @@ import { LocImplementationComponent } from './ioclEmp/components/loc-implementat
 import { EmpProfileComponent } from './ioclEmp/components/emp-profile/emp-profile.component';
 import { DispatchComponent } from './ioclEmp/components/dispatch/dispatch.component';
 import { UserEditComponent } from './ioclEmp/components/user-edit/user-edit.component';
+import { AddLocAdminComponent } from './ioclEmp/components/add-loc-admin/add-loc-admin.component';
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -44,7 +45,8 @@ import { UserEditComponent } from './ioclEmp/components/user-edit/user-edit.comp
     LocImplementationComponent,
     EmpProfileComponent,
     DispatchComponent,
-    UserEditComponent
+    UserEditComponent,
+    AddLocAdminComponent
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'

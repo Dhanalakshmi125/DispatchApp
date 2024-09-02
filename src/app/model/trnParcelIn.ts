@@ -30,6 +30,7 @@ export class TrnParcelIn {
       this.recordStatus = data.recordStatus || 'A';
       this.createdBy = data.createdBy;
       this.createdDate = data.createdDate;
-      this.lastUpdatedDate = data.lastUpdatedDate;
+      // this.lastUpdatedDate = data.lastUpdatedDate;
+      this.lastUpdatedDate = data.lastUpdatedDate ? new Date(data.lastUpdatedDate) : undefined;
   }
 }

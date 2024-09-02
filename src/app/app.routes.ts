@@ -22,6 +22,7 @@ import { LocAdminComponent } from './ioclEmp/components/loc-admin/loc-admin.comp
 import { EmpProfileComponent } from './ioclEmp/components/emp-profile/emp-profile.component';
 import { DispatchComponent } from './ioclEmp/components/dispatch/dispatch.component';
 import { UserEditComponent } from './ioclEmp/components/user-edit/user-edit.component';
+import { AddLocAdminComponent } from './ioclEmp/components/add-loc-admin/add-loc-admin.component';
 export const routes: Routes = [
   { path: "login", component: LoginComponent },
   { path: "disEmpReqOtp", component: DisEmpReqOtpComponent },
@@ -46,7 +47,7 @@ export const routes: Routes = [
       { path: 'parcelOutEdit', component: ParcelOutEditComponent }
     ]
   },
-  // {path:'',redirectTo:'ioclEmployee',pathMatch:'full'},
+  //  {path:'',redirectTo:'ioclEmployee/loc-admin',pathMatch:'full'},
   {
     path: 'ioclEmployee',
     component: IoclEmployeeComponent,
@@ -60,9 +61,10 @@ export const routes: Routes = [
       { path: 'reports', component: EmpReportsComponent },
       { path: 'profile', component: EmpProfileComponent },
       { path: 'dispatch', component: DispatchComponent },
-      {path:'userEdit', component:UserEditComponent}
+      {path:'userEdit', component:UserEditComponent},
+      {path:'addLocAdmin',component:AddLocAdminComponent}
 
-      // { path: '', redirectTo: '/dashboard', pathMatch: 'full' } // Default route
+     // { path: '', redirectTo: '/loc-admin', pathMatch: 'full' } // Default route
     ]
   }
 ];

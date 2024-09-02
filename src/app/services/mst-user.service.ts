@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MstUser } from '../model/mstUser';
 import { Observable } from 'rxjs';
+import { MstUserDTO } from '../model/mstUserDto';
 
 @Injectable({
   providedIn: 'root'
@@ -25,5 +26,8 @@ export class MstUserService {
   }
   getUserData(){
     return this.userDetails;
+  }
+  createLocAdmin(mstUserdto:MstUserDTO): Observable<any> {
+    return this.http.post(this.apiUrl, mstUserdto,{withCredentials: true});
   }
 }
