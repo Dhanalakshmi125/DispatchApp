@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 20px;
+    padding: 5px;
     /* width: 400px; */
     text-align: center;
     width: 100%;
@@ -20,6 +20,10 @@
     align-items: center;
     text-align: center;
 }
+.header-title{
+  text-align: left;
+  align-items:start;
+}
 .history-container {
     padding: 20px;
     display: flex;
@@ -29,8 +33,8 @@
   
   .parcel-section {
     flex: 1; /* Makes the sections take up equal space */
-    margin-right: 20px;
-    margin-bottom: 20px;
+    margin-right: 5px;
+    margin-bottom: 10px;
     max-width: 48%; /* Ensures the sections don't exceed half of the container */
   }
   

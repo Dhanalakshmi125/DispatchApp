@@ -55,3 +55,18 @@ mat-card-content {
   border-radius: 50%; /* Makes the image circular */
   object-fit: cover; /* Ensures the image covers the container */
 }
+
+.profile-field {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+}
+
+.profile-field {
+  flex: 0 0 40%;
+  font-weight: 600;
+}
+
+.profile-field span {
+  flex: 1;
+}

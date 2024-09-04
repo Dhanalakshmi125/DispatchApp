@@ -5,16 +5,20 @@
     </div>
     <mat-card-content>
       <div class="profile-field">
-        <strong>Username:</strong> {{ profile?.EmpName }}
+        <strong>Username:</strong> 
+        <span>:&nbsp;{{profile?.userName}}</span>
       </div>
       <div class="profile-field">
-        <strong>Designation:</strong> {{ profile?.Designation }}
+        <strong>Designation:</strong>
+        <span>:&nbsp;</span> {{ profile?.Designation }}
       </div>
       <div class="profile-field">
-        <strong>Role:</strong> {{ profile?.Role }}
+        <strong>Role:</strong> 
+        <span>:&nbsp;</span>{{ profile?.Role }}
       </div>
       <div class="profile-field">
-        <strong>Location Name:</strong> {{ profile?.locationName }}
+        <strong>Location Name:</strong>
+        <span>:&nbsp;</span> {{ profile?.locationName }}
       </div>
     </mat-card-content>
   </mat-card>

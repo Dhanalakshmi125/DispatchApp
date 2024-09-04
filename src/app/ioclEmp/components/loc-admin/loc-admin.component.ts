@@ -1,7 +1,7 @@
 import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { MstUser } from '../../../model/mstUser';
 import { MstUserService } from '../../../services/mst-user.service';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { NgIf, NgFor, CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -13,10 +13,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatSelectModule } from '@angular/material/select';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { MatTableModule } from '@angular/material/table';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 
 @Component({
@@ -51,29 +51,45 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 export class LocAdminComponent{
 
 @ViewChild('userDialogTemplate') userDialogTemplate!: TemplateRef<any>;
+@ViewChild('paginator', { static: false }) paginator!: MatPaginator;
+@ViewChild('confirmDialogTemplate') confirmDialogTemplate!: TemplateRef<any>;
 displayedColumns: string[] = ['locCode', 'userId', 'userName', 'mobileNumber', 'roleId', 'status','view'];
 originalData: MstUser[] = [];
-filteredData: MstUser[] = [];
-locCodeFilter: string = '';  // Model for the loc_code filter
+filteredData= new MatTableDataSource<MstUser>([]);
+empNameFilter: string = '';  // Model for the loc_code filter
+deletedUser:any='';
+public dialogRef!: MatDialogRef<any>; // Declare MatDialogRef
 
 constructor(
   private mstUserService: MstUserService,
   private dialog: MatDialog,
-  private router: Router
+  private router: Router,
+  private snackBar:MatSnackBar
 ) {}
 
 ngOnInit(): void {
   this.fetchAllUsers();
 }
 
-fetchAllUsers(): void {
+fetchAllUsers(page:number=0,size:number=5): void {
   this.mstUserService.getAllUsers().subscribe(data => {
-    this.originalData = data;
-    this.filteredData = data;  // Initialize filteredData with the full data
+   // this.originalData = data;
+    this.filteredData.data = data.content;  // Initialize filteredData with the full data
+    // this.paginator.length=data.totalElements;
+    this.applyFilter();
   }, error => {
     console.error('Error fetching users', error);
   });
 }
+
+onPageChange(event: PageEvent) {
+  this.fetchAllUsers(event.pageIndex, event.pageSize);
+}
+
+applyFilter() {
+  this.filteredData.filter = this.empNameFilter.trim().toLowerCase();
+}
+
 
 openViewDialog(user: MstUser): void {
   const dialogRef = this.dialog.open(this.userDialogTemplate, {
@@ -87,19 +103,19 @@ openViewDialog(user: MstUser): void {
   });
 }
 
-applyFilter(): void {
-  if (this.locCodeFilter) {
-    this.filteredData = this.originalData.filter(user =>
-      user.locCode.toLowerCase().includes(this.locCodeFilter.toLowerCase())
-    );
-  } else {
-    this.filteredData = [...this.originalData];  // Reset to original data
-  }
-}
+// applyFilter(): void {
+//   if (this.empNameFilter) {
+//     this.filteredData = this.originalData.filter(user =>
+//       user.userName.toLowerCase().includes(this.empNameFilter.toLowerCase())
+//     );
+//   } else {
+//     this.filteredData = [...this.originalData];  // Reset to original data
+//   }
+// }
 
 clearFilter(): void {
-  this.locCodeFilter = '';
-  this.filteredData = [...this.originalData];  // Reset to original data
+  this.empNameFilter = '';
+  this.applyFilter();  // Reset to original data
 }
 
 editUser(userData: MstUser): void {
@@ -108,17 +124,17 @@ editUser(userData: MstUser): void {
   this.router.navigate(['/ioclEmployee/userEdit']);
 }
 
-deleteUser(user: MstUser): void {
-  // const confirmDelete = confirm(`Are you sure you want to delete the user ${user.userName}?`);
-  // if (confirmDelete) {
-  //   // Call the delete service method here
-  //   this.mstUserService.deleteUser(user.userId).subscribe(() => {
-  //     this.fetchAllUsers();  // Refresh the user list after deletion
-  //   }, error => {
-  //     console.error('Error deleting user', error);
-  //   });
-  // }
-}
+// deleteUser(user: MstUser): void {
+//   // const confirmDelete = confirm(`Are you sure you want to delete the user ${user.userName}?`);
+//   // if (confirmDelete) {
+//   //   // Call the delete service method here
+//   //   this.mstUserService.deleteUser(user.userId).subscribe(() => {
+//   //     this.fetchAllUsers();  // Refresh the user list after deletion
+//   //   }, error => {
+//   //     console.error('Error deleting user', error);
+//   //   });
+//   // }
+// }
 
 addNew(): void {
   this.router.navigate(['/ioclEmployee/addLocAdmin']);
@@ -127,4 +143,48 @@ addNew(): void {
 onClose(): void {
   this.dialog.closeAll();  // Closes the currently open dialog
 }
+
+onChangeStatus(user: any) {
+  // Store the selected user details
+  this.deletedUser = user;
+
+  // Ensure that locCode and empCode are available
+  const hasLocCode = this.deletedUser.locCode;
+  const hasEmpCode = this.deletedUser.userId;
+
+  if (hasLocCode && hasEmpCode) {
+      // Open the dialog with a confirmation prompt
+      this.dialogRef = this.dialog.open(this.confirmDialogTemplate, {
+          data: {
+              locCode: this.deletedUser.locCode,
+              userId: this.deletedUser.userId
+          },
+      });
+  } else {
+      console.error('Location Code and Employee Code are required to delete the user');
+  }
+}
+
+deleteUser(locCode: string, userId: string) {
+  // Close the confirmation dialog
+  this.dialogRef.close();
+
+  // Call the service to delete the user based on locCode and empCode
+  this.mstUserService.deleteUser(locCode, userId).subscribe({
+      next: () => {
+          // Refresh the user data (you might want to implement a method to reload the user list)
+          this.fetchAllUsers();
+          this.snackBar.open('User deleted successfully!', 'Close', {
+              duration: 3000,
+          });
+      },
+      error: (err) => {
+          console.error('Error deleting user:', err);
+          this.snackBar.open('Failed to delete user!', 'Close', {
+              duration: 3000,
+          });
+      }
+  });
+}
+
 }
