@@ -18,7 +18,7 @@ export class MstUserService {
  getUserById(userId: string): Observable<MstUser> {
    return this.http.get<MstUser>(`${this.apiUrl}/${userId}`);
  }
-  getAllUsers(page: number = 0, size: number = 8): Observable<Page<MstUser>> {
+  getAllUsers(page: number = 0, size: number = 5): Observable<Page<MstUser>> {
     // Create query parameters
     let params = new HttpParams()
       .set('page', page.toString())
@@ -54,6 +54,10 @@ export class MstUserService {
   deleteUser(locCode: string, empCode: string): Observable<any> {
     const url = `${this.apiUrl}/${locCode}/${empCode}`;
     return this.http.delete(url,{withCredentials: true});
+}
+
+getDispatchUsers(): Observable<MstUser[]> {
+  return this.http.get<MstUser[]>(`${this.apiUrl}/dispatch`,{withCredentials:true});
 }
  
 }

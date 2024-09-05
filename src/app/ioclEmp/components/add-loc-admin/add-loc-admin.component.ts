@@ -256,7 +256,7 @@ onSubmit(): void {
       this.userForm.markAsPristine();
       this.userForm.markAsUntouched();
        this.userForm.reset();
-       this.router.navigate(['/ioclEmployee/history']); // Redirect to history after save
+       this.router.navigate(['/ioclEmployee/loc-admin']); // Redirect to history after save
     },
     error: (err) => {
       this.snackBar.open('Failed to submit user. Please try again.', 'Close', {

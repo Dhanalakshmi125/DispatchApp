@@ -72,10 +72,10 @@ ngOnInit(): void {
 }
 
 fetchAllUsers(page:number=0,size:number=5): void {
-  this.mstUserService.getAllUsers().subscribe(data => {
+  this.mstUserService.getAllUsers(page,size).subscribe(data => {
    // this.originalData = data;
     this.filteredData.data = data.content;  // Initialize filteredData with the full data
-    // this.paginator.length=data.totalElements;
+     this.paginator.length=data.totalElements;
     this.applyFilter();
   }, error => {
     console.error('Error fetching users', error);
@@ -177,6 +177,8 @@ deleteUser(locCode: string, userId: string) {
           this.snackBar.open('User deleted successfully!', 'Close', {
               duration: 3000,
           });
+          this.dialog.closeAll(); 
+          this.router.navigate(['/ioclEmployee/loc-admin']);
       },
       error: (err) => {
           console.error('Error deleting user:', err);

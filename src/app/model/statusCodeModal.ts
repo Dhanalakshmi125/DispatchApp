@@ -1,9 +1,9 @@
 export class StatusCodeModal {
-    statusCode: number;
-    message: string;
+    status: string;
+    status_code: number;
     constructor(data:any){
-      this.statusCode=data.statusCode,
-      this.message=data.message
+      this.status=data.status,
+      this.status_code=data.status_code
     }
   }
-  
+ 
