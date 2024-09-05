@@ -18,6 +18,8 @@ import { map, Observable, of, startWith } from 'rxjs';
 import { IoclEmpServiceService } from '../../../services/iocl-emp-service.service';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MstLocationService } from '../../../services/mst-location.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-loc-admin',
@@ -58,13 +60,15 @@ filteredUserNames: Observable<string[]> = of([]);
 empRoles:string[]=[];
 locationCodes: string[] = []; // Populate this with your location codes
 empCodes: string[] = []; // Populate this with your sender codes
-empNames: string = ''; // Populate this with your recipient codes
+empName: string = ''; // Populate this with your recipient codes
 
 constructor(
   private fb: FormBuilder,
   private mstUserService: MstUserService,
   private ioclEmpService: IoclEmpServiceService,
-  private mstLocationService:MstLocationService
+  private mstLocationService:MstLocationService,
+  private snackBar:MatSnackBar,
+  private router:Router
 ) {
   this.userForm = this.fb.group({
     locCode: ['', Validators.required],
@@ -72,6 +76,7 @@ constructor(
     userName: ['', Validators.required],
     mobileNumber: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
     roleId: ['', Validators.required],
+
   });
 }
 
@@ -93,7 +98,7 @@ ngOnInit(): void {
     if (userId) {
       this.loadUserNamesByUserId();
     } else {
-      this.empNames = ''; // Clear the names if locCode is empty
+      this.empName = ''; // Clear the names if locCode is empty
     }
   });
 
@@ -168,8 +173,8 @@ loadUserNamesByUserId(): void {
       
       next: (response) => {
         console.log('Full Response:', response);
-       this.empNames = response;
-        console.log('Received user Names:', this.empNames);
+       this.empName = response;
+        console.log('Received user Names:', this.empName);
       },
       error: (err) => {
         console.error('Failed to user names:', err);
@@ -211,22 +216,56 @@ filterEmployeeCodes(value: string): string[]{
 //   return this.empNames.filter(name => name.toLowerCase().includes(filterValue));
 // }
 
+// onSubmit(): void {
+//   if (this.userForm.valid) {
+//     const formData = this.userForm.value;
+
+//     this.mstUserService.createLocAdmin(formData).subscribe(
+//       response => {
+//         console.log('User created successfully', response);
+//       },
+//       error => {
+//         console.error('Error creating user', error);
+//       }
+//     );
+//   } else {
+//     console.error('Form is invalid');
+//   }
+// }
 onSubmit(): void {
-  if (this.userForm.valid) {
-    const formData = this.userForm.value;
-
-    this.mstUserService.createLocAdmin(formData).subscribe(
-      response => {
-        console.log('User created successfully', response);
-      },
-      error => {
-        console.error('Error creating user', error);
-      }
-    );
-  } else {
-    console.error('Form is invalid');
+  if (this.userForm.invalid) {
+    this.snackBar.open('Please fill all required fields.', 'Close', {
+      duration: 3000,
+      verticalPosition: 'top'
+    });
+    const user = this.userForm.value;
+    console.log('user  Data:', user);
+    return;
   }
+
+  const user = this.userForm.value;
+
+  this.mstUserService.createLocAdmin(user).subscribe({
+    next: (response) => {
+      this.snackBar.open('user submitted successfully!', 'Close', {
+        duration: 3000,
+        verticalPosition: 'top'
+      });
+      console.log('user  Data:', user);
+      // this.parcelInForm.reset();
+      this.userForm.markAsPristine();
+      this.userForm.markAsUntouched();
+       this.userForm.reset();
+       this.router.navigate(['/ioclEmployee/history']); // Redirect to history after save
+    },
+    error: (err) => {
+      this.snackBar.open('Failed to submit user. Please try again.', 'Close', {
+        duration: 3000,
+        verticalPosition: 'top'
+      });
+      const user = this.userForm.value;
+    console.log('user  Data:', user);
+    }
+  });
 }
-
-
 }
