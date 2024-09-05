@@ -29,7 +29,7 @@ export const routes: Routes = [
   { path: "disEmpVerOtp", component: DisEmpVerOtpComponent },
   { path: "ioclEmp", component: IoclEmpComponent },
   // {path:"ioclEmp",component:IoclEmpComponent},
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
+ // { path: '', redirectTo: 'login', pathMatch: 'full' },
   //{path:'',redirectTo:'disEmpVerOtp',pathMatch:'full'},
   {
     path: 'dispatchEmployee',
@@ -48,7 +48,7 @@ export const routes: Routes = [
     ]
   },
   //  {path:'',redirectTo:'ioclEmployee/loc-admin',pathMatch:'full'},
- // {path:'',redirectTo:'ioclEmployee/loc-admin',pathMatch:'full'},
+  {path:'',redirectTo:'ioclEmployee/loc-admin',pathMatch:'full'},
   {
     path: 'ioclEmployee',
     component: IoclEmployeeComponent,

@@ -23,7 +23,7 @@
    */
   /* CSS for the small-card */
 .small-card {
-    width: 400px; /* Adjust width as needed */
+    width:50%; /* Adjust width as needed */
     margin: 5px auto;
     /* padding: 20px; */
   }

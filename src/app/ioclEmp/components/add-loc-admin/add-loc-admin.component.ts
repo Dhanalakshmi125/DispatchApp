@@ -17,6 +17,7 @@ import { MstUserService } from '../../../services/mst-user.service';
 import { map, Observable, of, startWith } from 'rxjs';
 import { IoclEmpServiceService } from '../../../services/iocl-emp-service.service';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MstLocationService } from '../../../services/mst-location.service';
 
 @Component({
   selector: 'app-add-loc-admin',
@@ -57,12 +58,13 @@ filteredUserNames: Observable<string[]> = of([]);
 empRoles:string[]=[];
 locationCodes: string[] = []; // Populate this with your location codes
 empCodes: string[] = []; // Populate this with your sender codes
-empNames: string[] = []; // Populate this with your recipient codes
+empNames: string = ''; // Populate this with your recipient codes
 
 constructor(
   private fb: FormBuilder,
   private mstUserService: MstUserService,
-  private ioclEmpService: IoclEmpServiceService
+  private ioclEmpService: IoclEmpServiceService,
+  private mstLocationService:MstLocationService
 ) {
   this.userForm = this.fb.group({
     locCode: ['', Validators.required],
@@ -76,13 +78,22 @@ constructor(
 ngOnInit(): void {
 
   this.loadLocCodes();
-  this.loadUserID();
+  // this.loadUserID();
   this.loadRoles();
+
   this.userForm.get('locCode')?.valueChanges.subscribe((locCode) => {
     if (locCode) {
-      this.loadUserNameByLocCode();
+      this.loadUserIdByLocCodes();
     } else {
-      this.empNames = []; // Clear the names if locCode is empty
+      this.empCodes = []; // Clear the names if locCode is empty
+    }
+  });
+
+  this.userForm.get('userId')?.valueChanges.subscribe((userId) => {
+    if (userId) {
+      this.loadUserNamesByUserId();
+    } else {
+      this.empNames = ''; // Clear the names if locCode is empty
     }
   });
 
@@ -96,24 +107,45 @@ ngOnInit(): void {
     map(value => this.filterEmployeeCodes(value))
   ) ?? of([]);
 
-  this.filteredUserNames = this.userForm.get('userName')?.valueChanges.pipe(
-    startWith(''),
-    map(value => this.filterUserNames(value))
-  ) ?? of([]);
+  // this.filteredUserNames = this.userForm.get('userName')?.valueChanges.pipe(
+  //   startWith(''),
+  //   map(value => this.filterUserNames(value))
+  // ) ?? of([]);
 
   // this.roles$ = this.ioclEmpService.getRoles();
 }
 
 loadLocCodes():void{ 
-  this.ioclEmpService.getLocationNames().subscribe(locations => {
+  this.ioclEmpService.getAllLocations().subscribe(locations => {
     this.locationCodes = locations;
   });
 }
 
-loadUserID():void{
-  this.ioclEmpService.getEmployeeCodes().subscribe(empCode => {
-    this.empCodes = empCode;
-  });
+loadUserIdByLocCodes():void{
+  const LocCode = this.userForm.get('locCode')?.value;
+ 
+  console.log('Location Code:', LocCode); // Debugging
+ 
+
+  if (LocCode) {
+  //  const locName = LocCode.split('(')[0].trim(); 
+     // Extract the locName from senderLocCode
+     const locName = LocCode.trim(); 
+    console.log("locname:",locName);
+   
+    this.ioclEmpService.getEmpCodesByLocCode(locName).subscribe({
+      
+      next: (response) => {
+        console.log('Full Response:', response);
+       this.empCodes = response;
+        console.log('Received location Codes:', this.empCodes);
+      },
+      error: (err) => {
+        console.error('Failed to load loaction codes:', err);
+      }
+    });
+    
+  }
 }
 
 // loadUserNameByLocCode(): void {
@@ -125,25 +157,22 @@ loadUserID():void{
 //     });
 //   }
 // }
-loadUserNameByLocCode(): void {
-  const LocCode = this.userForm.get('locCode')?.value;
- 
-  console.log('Sender Location Code:', LocCode); // Debugging
- 
-
-  if (LocCode) {
-    const locName = LocCode.split('(')[0].trim();  // Extract the locName from senderLocCode
-    console.log("locname:",locName);
+loadUserNamesByUserId(): void {
+  const empCode = this.userForm.get('userId')?.value;
+  console.log('user id:', empCode); // Debugging
+  if (empCode) {
+    const userId = empCode;  // Extract the locName from senderLocCode
+    console.log("userId:",userId);
    
-    this.ioclEmpService.getEmployeesByLoc(locName).subscribe({
+    this.ioclEmpService.getUserNameByUserId(userId).subscribe({
       
       next: (response) => {
         console.log('Full Response:', response);
        this.empNames = response;
-        console.log('Received Sender Names:', this.empNames);
+        console.log('Received user Names:', this.empNames);
       },
       error: (err) => {
-        console.error('Failed to load sender names:', err);
+        console.error('Failed to user names:', err);
       }
     });
     
@@ -174,13 +203,13 @@ filterEmployeeCodes(value: string): string[]{
   return this.empCodes.filter(empCode=> empCode.toLowerCase().includes(filterValue));
 }
 
-filterUserNames(value: string): string[] {
-  if (value.trim() === '') {
-    return []; // No suggestions when input is empty
-  }
-  const filterValue = value.toLowerCase();
-  return this.empNames.filter(name => name.toLowerCase().includes(filterValue));
-}
+// filterUserNames(value: string): string[] {
+//   if (value.trim() === '') {
+//     return []; // No suggestions when input is empty
+//   }
+//   const filterValue = value.toLowerCase();
+//   return this.empNames.filter(name => name.toLowerCase().includes(filterValue));
+// }
 
 onSubmit(): void {
   if (this.userForm.valid) {

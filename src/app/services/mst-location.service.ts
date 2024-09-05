@@ -8,12 +8,12 @@ import { Observable } from 'rxjs';
 })
 export class MstLocationService {
 
-  private apiUrl = 'http://localhost:8080/parcels-in/api/locations';
+  private apiUrl = 'http://localhost:8182/locations';
 
   constructor(private http: HttpClient) { }
 
-  getAllLocations(): Observable<MstLocation[]> {
-    return this.http.get<MstLocation[]>(this.apiUrl);
+  getAllLocations(): Observable<string[]> {
+    return this.http.get<string[]>(`${this.apiUrl}/locCodes`);
   }
   
 }

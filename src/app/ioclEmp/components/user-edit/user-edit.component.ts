@@ -52,6 +52,7 @@ import { Router } from '@angular/router';
 export class UserEditComponent {
   editForm!: FormGroup;
   userData!:MstUser ;
+  isDisabled:boolean=true;
 
   constructor(
     private mstUserService:MstUserService,
@@ -65,8 +66,8 @@ export class UserEditComponent {
     this.userData = this.mstUserService.getUserData();
 
     this.editForm = this.fb.group({
-      locCode: [this.userData.locCode,Validators.required],
-      userId: [this.userData.userId,Validators.required],
+      locCode: [{ value: this.userData.locCode, disabled: true },Validators.required],
+      userId: [{ value: this.userData.userId, disabled: true },Validators.required],
       userName:[this.userData.userName,Validators.required],
       mobileNumber: [this.userData.mobileNumber, [Validators.required, Validators.pattern('^[0-9]+$')]],
       roleId: [this.userData.roleId,Validators.required],

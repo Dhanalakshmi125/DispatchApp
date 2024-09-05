@@ -104,8 +104,12 @@ getEmployeeCodes(): Observable<string[]> {
   return this.http.get<string[]>(`${this.baseUrl}/empCodes`);
 }
 
-getLocationNames(): Observable<string[]> {
-  return this.http.get<string[]>(`${this.disUrl}/locNames`);
+getLocationNames(): Observable<string> {
+  return this.http.get<string>(`${this.disUrl}/locNames`);
+}
+
+getAllLocations(): Observable<string[]> {
+  return this.http.get<string[]>(`${this.baseUrl}/locCodes`);
 }
 
 getEmployeesByLoc(locCode: string): Observable<string[]> {
@@ -116,5 +120,13 @@ getRoles(): Observable<string[]> {
   return this.http.get<string[]>(`${this.baseUrl}/roles`,{withCredentials:true});
 }
 
+getEmpCodesByLocCode(locCode: string): Observable<string[]> {
+  const params = new HttpParams().set('locCode', locCode);
+  return this.http.get<string[]>(`${this.baseUrl}/empCodesByLocCode`, { params });
+}
 
+getUserNameByUserId(userId: string): Observable<string> {
+  const params = new HttpParams().set('userId', userId);
+  return this.http.get<string>(`${this.baseUrl}/userNameByUserId`, { params,responseType: 'text' as 'json'},);
+}
 }
