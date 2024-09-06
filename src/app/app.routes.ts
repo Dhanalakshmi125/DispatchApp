@@ -24,6 +24,8 @@ import { DispatchComponent } from './ioclEmp/components/dispatch/dispatch.compon
 import { UserEditComponent } from './ioclEmp/components/user-edit/user-edit.component';
 import { AddLocAdminComponent } from './ioclEmp/components/add-loc-admin/add-loc-admin.component';
 import { AddRefSeqComponent } from './ioclEmp/components/add-ref-seq/add-ref-seq.component';
+import { AddDisUserComponent } from './ioclEmp/components/add-dis-user/add-dis-user.component';
+import { DisUserEditComponent } from './ioclEmp/components/dis-user-edit/dis-user-edit.component';
 export const routes: Routes = [
   { path: "login", component: LoginComponent },
   { path: "disEmpReqOtp", component: DisEmpReqOtpComponent },
@@ -65,7 +67,9 @@ export const routes: Routes = [
       { path: 'dispatch', component: DispatchComponent },
       {path:'userEdit', component:UserEditComponent},
       {path:'addLocAdmin',component:AddLocAdminComponent},
-      {path:'addRefSeq',component:AddRefSeqComponent}
+      {path:'addRefSeq',component:AddRefSeqComponent},
+      {path:'addDisUser', component:AddDisUserComponent},
+      {path:'disUserEdit',component:DisUserEditComponent}
 
      // { path: '', redirectTo: '/loc-admin', pathMatch: 'full' } // Default route
     ]

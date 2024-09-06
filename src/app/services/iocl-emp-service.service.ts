@@ -129,4 +129,10 @@ getUserNameByUserId(userId: string): Observable<string> {
   const params = new HttpParams().set('userId', userId);
   return this.http.get<string>(`${this.baseUrl}/userNameByUserId`, { params,responseType: 'text' as 'json'},);
 }
+
+getEmpCodesBylogUserLocCode(): Observable<string[]> {
+  //const params = new HttpParams().set('locCode', locCode);
+  return this.http.get<string[]>(`${this.baseUrl}/empCodesByloguserLocCode`, {withCredentials:true });
+}
+
 }

@@ -133,7 +133,7 @@ export class DispatchComponent {
   editUser(userData: MstUser): void {
     this.dialog.closeAll();
     this.mstUserService.setUserData(userData);
-    this.router.navigate(['/ioclEmployee/userEdit']);
+    this.router.navigate(['/ioclEmployee/disUserEdit']);
   }
   
   // deleteUser(user: MstUser): void {
@@ -149,7 +149,7 @@ export class DispatchComponent {
   // }
   
   addNew(): void {
-    this.router.navigate(['/ioclEmployee/addLocAdmin']);
+    this.router.navigate(['/ioclEmployee/addDisUser']);
   }
   
   onClose(): void {
