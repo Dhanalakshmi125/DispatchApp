@@ -53,7 +53,7 @@ import { RefSequence } from '../../../model/refSequence';
 export class LocImplementationComponent {
 @ViewChild('paginator', { static: false }) paginator!: MatPaginator;
 // @ViewChild('confirmDialogTemplate') confirmDialogTemplate!: TemplateRef<any>;
-displayedColumns: string[] = ['locCode','inSequenceNo','inSequenceNo'];
+displayedColumns: string[] = ['locCode','inSequenceNo','outSequenceNo'];
 originalData:RefSequence[] = [];
 filteredData= new MatTableDataSource<RefSequence>([]);
 locCodeFilter: string = '';  // Model for the loc_code filter
